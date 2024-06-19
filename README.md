@@ -1,6 +1,10 @@
 # ForceGL20
 A Minecraft mod for [Fabric](https://fabricmc.net/) & [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) that forces the game to use OpenGL 2.0.
 
+## Fixes-
+Fixes driver crash with old GPUs caused by Java exception while loading shaders using Iris or Oculus.
+Fixes game not launching due to GL errors.
+
 ## Why?
 Since Minecraft 1.17, Mojang changed the required OpenGL version to 3.2.  
 This means that players with an old graphic card that doesn't support OpenGL 3.2 can no longer play the game.  
@@ -18,3 +22,7 @@ If you want to compile ForceGL20 by yourself, use the following command:
 ```
 ./gradle build  
 ```
+Use the build from fabric/build/libs.
+
+## Orignal mod
+For Minecraft 1.19 and below use the orignal mod by KabanFriends - [Github](https://github.com/KabanFriends/ForceGL20) [Modrinth](https://modrinth.com/mod/forcegl20)
