@@ -12,10 +12,10 @@ jobs:
       matrix:
         # Use these Java versions
         java: [
-          17,
+          21,
         ]
         # and run on both Linux and Windows
-        os: [ubuntu-20.04, windows-2022]
+        os: [ubuntu-20.04]
     runs-on: ${{ matrix.os }}
     steps:
       - name: checkout repository
@@ -31,3 +31,7 @@ jobs:
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
+      - uses: "actions/upload-artifact@v4"
+        with:
+          name: "ForceGL2"
+          path: "build/libs/*.jar"
