@@ -18,3 +18,7 @@ If you want to compile ForceGL20 by yourself, use the following command:
 ```
 ./gradle build  
 ```
+Use the build from fabric/build/libs.
+
+## Orignal mod
+For Minecraft 1.19 and below use the orignal mod by KabanFriends - [Github](https://github.com/KabanFriends/ForceGL20) [Modrinth](https://modrinth.com/mod/forcegl20)
