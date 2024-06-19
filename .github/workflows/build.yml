@@ -34,4 +34,4 @@ jobs:
       - uses: "actions/upload-artifact@v4"
         with:
           name: "ForceGL2"
-          path: "build/libs/*.jar"
+          path: "fabric/build/libs/*.jar"
