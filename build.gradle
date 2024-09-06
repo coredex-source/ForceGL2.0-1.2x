@@ -1,7 +1,7 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.6-SNAPSHOT" apply false
-    id 'net.neoforged.gradle.userdev' version '7.0.105'
+    id 'net.neoforged.gradle.userdev' version '7.0.145'
 }
 
 architectury {
@@ -48,10 +48,13 @@ allprojects {
 
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
-        options.release = 16
+        options.release = 21
     }
 
     java {
         withSourcesJar()
+        toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+        }
     }
 }

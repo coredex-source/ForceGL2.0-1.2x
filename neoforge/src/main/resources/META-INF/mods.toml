@@ -1,5 +1,5 @@
-modLoader = "javafml"
-loaderVersion = "[37,)"
+modLoader = "javafml"  # Verify if this should remain 'javafml' or change for NeoForge
+loaderVersion = "[2,)"  # Adjust to the correct NeoForge version
 #issueTrackerURL = ""
 license = "LGPL-3.0"
 
@@ -12,15 +12,15 @@ description = "Forces the game to use OpenGL 2.0!"
 logoFile = "assets/forcegl20/icon.png"
 
 [[dependencies.forcegl20]]
-modId = "forge"
-mandatory = true
-versionRange = "[37,)"
+modId = "neoforge"
+type="required"
+versionRange = "[21.1.40,)"  # Ensure this matches your NeoForge version
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.forcegl20]]
 modId = "minecraft"
-mandatory = true
-versionRange = "[1.17.1,)"
+type="required"
+versionRange = "[1.21.1]"  # Ensure the version range covers supported versions
 ordering = "NONE"
 side = "CLIENT"
