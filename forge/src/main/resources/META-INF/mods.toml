@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[37,)"
+loaderVersion = "[51,)"
 #issueTrackerURL = ""
 license = "LGPL-3.0"
 
@@ -14,13 +14,13 @@ logoFile = "assets/forcegl20/icon.png"
 [[dependencies.forcegl20]]
 modId = "forge"
 mandatory = true
-versionRange = "[37,)"
+versionRange = "[51,)"
 ordering = "NONE"
 side = "CLIENT"
 
 [[dependencies.forcegl20]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.17.1,)"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "CLIENT"
