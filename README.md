@@ -1,5 +1,5 @@
 # ForceGL20
-A Minecraft mod for [Fabric](https://fabricmc.net/) & [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) that forces the game to use OpenGL 2.0.
+A Minecraft mod for [Fabric](https://fabricmc.net/), [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) & [Quilt](https://quiltmc.org/) that forces the game to use OpenGL 2.0.
 
 ## Fixes-
 Fixes driver crash with old GPUs caused by Java exception while loading shaders using Iris or Oculus.
