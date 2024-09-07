@@ -39,6 +39,7 @@ jobs:
         with:
           name: "ForceGL2"
           path: "forge/build/libs/*.jar"
+      - uses: "actions/upload-artifact@v4"
         with:
           name: "ForceGL2"
           path: "neoforge/build/libs/*.jar"
