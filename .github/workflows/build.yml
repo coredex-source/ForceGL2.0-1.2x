@@ -39,3 +39,6 @@ jobs:
         with:
           name: "ForceGL2"
           path: "forge/build/libs/*.jar"
+        with:
+          name: "ForceGL2"
+          path: "neoforge/build/libs/*.jar"
