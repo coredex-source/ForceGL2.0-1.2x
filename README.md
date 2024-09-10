@@ -1,6 +1,12 @@
 # ForceGL20
 A Minecraft mod for [Fabric](https://fabricmc.net/) & [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) that forces the game to use OpenGL 2.0.
 
+## Mod does not load up on forge or neoforge?
+The loaders take early control of the loading screen, to prevent that from happening-
+-> Launch the game once and let it crash.
+-> Navigate to .minecraft/config folder, edit the fml.toml file and change **earlyWindowControl = true** to **earlyWindowControl = false**.
+-> Load the game again with the mod in the mods folder and it should load up normally.
+
 ## Fixes-
 Fixes driver crash with old GPUs caused by Java exception while loading shaders using Iris or Oculus.
 Fixes game not launching due to GL errors.
