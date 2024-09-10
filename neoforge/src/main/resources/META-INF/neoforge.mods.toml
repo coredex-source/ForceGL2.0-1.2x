@@ -5,7 +5,7 @@ license = "LGPL-3.0"
 
 [[mods]]
 modId = "forcegl20"
-version = "${version}"
+version = "1.2.1"
 displayName = "ForceGL20"
 authors = "KabanFriends, Coredex(coredex-source)"
 description = "Forces the game to use OpenGL 2.0!"
