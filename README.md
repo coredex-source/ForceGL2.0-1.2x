@@ -1,5 +1,5 @@
 # ForceGL20
-A Minecraft mod for [Fabric](https://fabricmc.net/), [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/) & [Quilt](https://quiltmc.org/) that forces the game to use OpenGL 2.0.
+A Minecraft mod for [Fabric](https://fabricmc.net/), [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/), [Quilt](https://quiltmc.org/) & [NeoForge](https://neoforged.net) that forces the game to use OpenGL 2.0.
 
 ## Mod does not load up on forge or neoforge?
 The loaders take early control of the loading screen, to prevent that from happening-
