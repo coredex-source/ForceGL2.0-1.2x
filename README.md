@@ -4,9 +4,9 @@ You can download it using [CurseForge](https://www.curseforge.com/minecraft/mc-m
 
 ## Mod does not load up on forge or neoforge?
 The loaders take early control of the loading screen, to prevent that from happening-
--> Launch the game once and let it crash.
--> Navigate to .minecraft/config folder, edit the fml.toml file and change **earlyWindowControl = true** to **earlyWindowControl = false**.
--> Load the game again with the mod in the mods folder and it should load up normally.
+- Launch the game once and let it crash.
+- Navigate to .minecraft/config folder, edit the fml.toml file and change **earlyWindowControl = true** to **earlyWindowControl = false**.
+- Load the game again with the mod in the mods folder and it should load up normally.
 
 ## Fixes-
 Fixes driver crash with old GPUs caused by Java exception while loading shaders using Iris or Oculus.
