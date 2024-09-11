@@ -17,6 +17,6 @@
     "forcegl20.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.21"
+    "minecraft": ">=1.17"
   }
 }
