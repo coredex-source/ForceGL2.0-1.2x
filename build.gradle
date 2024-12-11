@@ -42,6 +42,10 @@ allprojects {
             name 'Xander Maven'
             url 'https://maven.isxander.dev/releases'
         }
+        maven {
+            name = "Terraformers"
+            url = "https://maven.terraformersmc.com/"
+        }
     }
 
     tasks.withType(JavaCompile) {
