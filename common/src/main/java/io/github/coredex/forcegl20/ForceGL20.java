@@ -1,8 +1,8 @@
-package io.github.kabanfriends.forcegl20;
+package io.github.coredex.forcegl20;
 
 import com.google.common.collect.ImmutableMap;
-import io.github.kabanfriends.forcegl20.override.HintOverride;
-import io.github.kabanfriends.forcegl20.override.OverrideType;
+import io.github.coredex.forcegl20.override.HintOverride;
+import io.github.coredex.forcegl20.override.OverrideType;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

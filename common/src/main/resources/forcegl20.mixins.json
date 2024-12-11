@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "io.github.kabanfriends.forcegl20.mixin",
+  "package": "io.github.coredex.forcegl20.mixin",
   "minVersion": "0.8",
   "client": [
     "GL20Mixin"

@@ -1,9 +1,9 @@
-package io.github.kabanfriends.forcegl20.mixin;
+package io.github.coredex.forcegl20.mixin;
 
 import com.mojang.blaze3d.platform.Window;
-import io.github.kabanfriends.forcegl20.ForceGL20;
-import io.github.kabanfriends.forcegl20.override.HintOverride;
-import io.github.kabanfriends.forcegl20.override.OverrideType;
+import io.github.coredex.forcegl20.ForceGL20;
+import io.github.coredex.forcegl20.override.HintOverride;
+import io.github.coredex.forcegl20.override.OverrideType;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
