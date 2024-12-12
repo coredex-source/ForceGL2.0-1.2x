@@ -1,6 +1,6 @@
 package io.github.coredex.forcegl20.mixin;
 
-import com.mojang.blaze3d.platform.Window;
+import net.minecraft.client.util.Window;
 import io.github.coredex.forcegl20.ForceGL20;
 import io.github.coredex.forcegl20.override.HintOverride;
 import io.github.coredex.forcegl20.override.OverrideType;
