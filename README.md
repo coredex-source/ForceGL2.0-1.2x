@@ -29,7 +29,7 @@ The loaders take early control of the loading screen, to prevent that from happe
 ```
 ./gradle build  
 ```
-- Use the build from {LoaderType}/build/libs.
+- Use the build from build/libs.
 
 ## Orignal mod
 - Orignal mod by KabanFriends - [Github](https://github.com/KabanFriends/ForceGL20) [Modrinth](https://modrinth.com/mod/forcegl20)
