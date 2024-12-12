@@ -1,17 +1,19 @@
 {
   "schemaVersion": 1,
-  "id": "forcegl20",
+  "id": "forcegl",
   "version": "${version}",
-  "name": "ForceGL20",
-  "description": "Forces the game to use OpenGL 2.0!",
+  "name": "ForceGL",
+  "description": "Forces the game to use a specific OpenGL version (OpenGL2.0 by default)!",
   "authors": [
     "KabanFriends, Coredex(coredex-source)"
   ],
   "contact": {
-    "sources": "https://github.com/KabanFriends/ForceGL20, https://github.com/coredex-source/ForceGL20-1.2x"
+    "sources": "https://github.com/coredex-source/ForceGL20-1.2x",
+    "homepage": "https://github.com/coredex-source/ForceGL20-1.2x",
+    "issues": "https://github.com/coredex-source/ForceGL20-1.2x/issues"
   },
   "license": "LGPL-3.0",
-  "icon": "assets/forcegl20/icon.png",
+  "icon": "assets/forcegl/icon.png",
   "environment": "client",
   "entrypoints": {
 		"main": [
@@ -27,8 +29,7 @@
   ],
   "depends": {
     "minecraft": ">=1.21.4",
-    "yet_another_config_lib_v3": "*",
-    "modmenu": "*"
+    "yet_another_config_lib_v3": "*"
   },
   "custom": {
 		"modmenu": {

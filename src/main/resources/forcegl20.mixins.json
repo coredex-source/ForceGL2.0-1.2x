@@ -3,9 +3,11 @@
   "package": "io.github.coredex.forcegl20.mixin",
   "minVersion": "0.8",
   "client": [
-    "GL20Mixin"
+    "GL20Mixin",
+    "OptionsScreenMixin"
   ],
   "mixins": [
+    "OptionsScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
