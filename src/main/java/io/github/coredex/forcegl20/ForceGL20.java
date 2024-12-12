@@ -1,6 +1,8 @@
 package io.github.coredex.forcegl20;
 
 import com.google.common.collect.ImmutableMap;
+
+import io.github.coredex.forcegl20.config.ForceGL20Config;
 import io.github.coredex.forcegl20.override.HintOverride;
 import io.github.coredex.forcegl20.override.OverrideType;
 import org.lwjgl.glfw.GLFW;
@@ -34,7 +36,8 @@ public class ForceGL20 {
         // Window hint values to override
         ImmutableMap.Builder<Integer, HintOverride> overrideBuilder = ImmutableMap.builder();
 
-        overrideBuilder.put(GLFW.GLFW_CONTEXT_VERSION_MAJOR, new HintOverride(OverrideType.SET_VALUE, 2));
+        int contextVersionMajor = ForceGL20Config.CONFIG.instance().contextVersionMajor;
+        overrideBuilder.put(GLFW.GLFW_CONTEXT_VERSION_MAJOR, new HintOverride(OverrideType.SET_VALUE, contextVersionMajor));
         overrideBuilder.put(GLFW.GLFW_CONTEXT_VERSION_MINOR, new HintOverride(OverrideType.SET_VALUE, 0));
         overrideBuilder.put(GLFW.GLFW_OPENGL_PROFILE, new HintOverride(OverrideType.SET_VALUE, 0));
         overrideBuilder.put(GLFW.GLFW_OPENGL_FORWARD_COMPAT, HintOverride.DO_NOT_SET);
