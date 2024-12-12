@@ -24,12 +24,12 @@ public class ForceGL20Config {
 
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(CONFIG, ((defaults, config, builder) -> builder
-                .title(Text.translatable("forcegl20.config.title"))
+                .title(Text.translatable("ForceGL Config"))
                 .category(ConfigCategory.createBuilder()
-                        .name(Text.translatable("forcegl20.category.opengl"))
+                        .name(Text.translatable("ForceGL Config"))
                         .option(Option.<Integer>createBuilder()
-                                .name(Text.translatable("forcegl20.option.contextVersionMajor"))
-                                .description(OptionDescription.of(Text.translatable("forcegl20.option.contextVersionMajor.description")))
+                                .name(Text.translatable("OpenGL version"))
+                                .description(OptionDescription.of(Text.translatable("Switch the openGL version according to your needs. Default = 2")))
                                 .binding(defaults.contextVersionMajor, () -> config.contextVersionMajor, newVal -> config.contextVersionMajor = newVal)
                                 .controller(opt -> IntegerSliderControllerBuilder.create(opt)
                                         .range(1, 4) // OpenGL major version range
