@@ -15,6 +15,6 @@ public class ForceGL20Mod implements ModInitializer {
 
         // Access the loaded configuration
         ForceGL20Config config = ForceGL20Config.CONFIG.instance();
-        LOGGER.info("ForceGL20 configuration loaded: Context Version Major = {}", config.contextVersionMajor);
+        LOGGER.info("ForceGL20 configuration loaded. Testcase: Context Version Major = {}", config.contextVersionMajor);
     }
 }

@@ -26,6 +26,10 @@ public class ForceGL20Config {
     @SerialEntry
     public boolean modEnabled = true; // New field to toggle the mod
 
+    @SerialEntry
+    public boolean irisIFOverride = false; // Default is false
+
+
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(CONFIG, ((defaults, config, builder) -> builder
                 .title(Text.translatable("ForceGL Config"))
@@ -44,6 +48,12 @@ public class ForceGL20Config {
                                 .controller(opt -> IntegerSliderControllerBuilder.create(opt)
                                         .range(1, 4) // OpenGL major version range
                                         .step(1))
+                                .build())
+                        .option(Option.<Boolean>createBuilder()
+                                .name(Text.translatable("Enable Iris-ImmediatelyFast Override"))
+                                .description(OptionDescription.of(Text.translatable("Allows ForceGL20 to work even if Iris and ImmediatelyFast are detected together. Default = false.")))
+                                .binding(defaults.irisIFOverride, () -> config.irisIFOverride, newVal -> config.irisIFOverride = newVal)
+                                .controller(BooleanControllerBuilder::create)
                                 .build())
                         .build()
                 ))).generateScreen(parent);

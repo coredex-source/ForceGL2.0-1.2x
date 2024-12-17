@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableMap;
 import io.github.coredex.forcegl20.config.ForceGL20Config;
 import io.github.coredex.forcegl20.override.HintOverride;
 import io.github.coredex.forcegl20.override.OverrideType;
+import net.fabricmc.loader.api.FabricLoader;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +32,29 @@ public class ForceGL20 {
     );
 
     static {
-        if (ForceGL20Config.CONFIG.instance().modEnabled) {
-            LOGGER.info("ForceGL20 mod is enabled. Initializing...");
-            GLFW_OVERRIDE_VALUES = createGlfwOverrideValues();
-            GLFW_HINT_NAMES = createGlfwHintNames();
-        } else {
-            LOGGER.info("ForceGL20 mod is disabled. Skipping initialization.");
+        boolean irisPresent = FabricLoader.getInstance().isModLoaded("iris");
+        boolean immediatelyFastPresent = FabricLoader.getInstance().isModLoaded("immediatelyfast");
+
+        boolean modEnabled = ForceGL20Config.CONFIG.instance().modEnabled;
+        boolean irisIFOverride = ForceGL20Config.CONFIG.instance().irisIFOverride;
+
+        if (irisPresent && immediatelyFastPresent && !irisIFOverride) {
+            LOGGER.warn("ForceGL20 is disabled because it can be incompatible with Iris and ImmediatelyFast if both are used together and shaders are being used. Override this behavior by changing \"irisIFOverride\" to true in the config manually or by using ModMenu/YACL.");
             GLFW_OVERRIDE_VALUES = ImmutableMap.of();
             GLFW_HINT_NAMES = ImmutableMap.of();
+        } else {
+            if (irisPresent && immediatelyFastPresent && irisIFOverride) {
+                LOGGER.info("Iris-ImmediatelyFast compatibility override enabled. Proceeding with ForceGL20 initialization.");
+            }
+            if (modEnabled) {
+                LOGGER.info("ForceGL20 mod is enabled. Initializing...");
+                GLFW_OVERRIDE_VALUES = createGlfwOverrideValues();
+                GLFW_HINT_NAMES = createGlfwHintNames();
+            } else {
+                LOGGER.info("ForceGL20 mod is disabled. Skipping initialization.");
+                GLFW_OVERRIDE_VALUES = ImmutableMap.of();
+                GLFW_HINT_NAMES = ImmutableMap.of();
+            }
         }
     }
 
@@ -78,7 +94,7 @@ public class ForceGL20 {
                     nameBuilder.put(code, fieldName);
                 }
             } catch (IllegalAccessException e) {
-                LOGGER.error("Failed to access GLFW field: {}", fieldName, e);
+                LOGGER.error("Failed to access GLFW field: {}", field.getName(), e);
             }
         }
 
