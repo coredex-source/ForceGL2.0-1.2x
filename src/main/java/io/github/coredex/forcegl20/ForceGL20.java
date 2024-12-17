@@ -31,8 +31,15 @@ public class ForceGL20 {
     );
 
     static {
-        GLFW_OVERRIDE_VALUES = createGlfwOverrideValues();
-        GLFW_HINT_NAMES = createGlfwHintNames();
+        if (ForceGL20Config.CONFIG.instance().modEnabled) {
+            LOGGER.info("ForceGL20 mod is enabled. Initializing...");
+            GLFW_OVERRIDE_VALUES = createGlfwOverrideValues();
+            GLFW_HINT_NAMES = createGlfwHintNames();
+        } else {
+            LOGGER.info("ForceGL20 mod is disabled. Skipping initialization.");
+            GLFW_OVERRIDE_VALUES = ImmutableMap.of();
+            GLFW_HINT_NAMES = ImmutableMap.of();
+        }
     }
 
     private static ImmutableMap<Integer, HintOverride> createGlfwOverrideValues() {
@@ -74,7 +81,7 @@ public class ForceGL20 {
                 LOGGER.error("Failed to access GLFW field: {}", fieldName, e);
             }
         }
-        
+
         return nameBuilder.build();
     }
 }

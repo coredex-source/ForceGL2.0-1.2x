@@ -8,6 +8,7 @@ import net.minecraft.text.Text;
 
 public class ForceGLOptionsScreen extends Screen {
     private int openGLVersion = ForceGL20Config.CONFIG.instance().contextVersionMajor;
+    private boolean modEnabled = ForceGL20Config.CONFIG.instance().modEnabled; // New field
 
     protected ForceGLOptionsScreen(Text title) {
         super(title);
@@ -15,9 +16,25 @@ public class ForceGLOptionsScreen extends Screen {
 
     @Override
     protected void init() {
+        // Toggle button for enabling/disabling the mod
+        ButtonWidget toggleModButton = ButtonWidget.builder(
+            Text.literal("Enable Mod: " + (modEnabled ? "ON" : "OFF")),
+            button -> {
+                modEnabled = !modEnabled; // Toggle the mod state
+                button.setMessage(Text.literal("Enable Mod: " + (modEnabled ? "ON" : "OFF")));
+            }
+        ).dimensions(
+            this.width / 2 - 100, // X Position
+            this.height / 2 - 60, // Y Position
+            200,                 // Width
+            20                   // Height
+        ).build();
+
+        this.addDrawableChild(toggleModButton);
+
         // Slider for OpenGL Version
         this.addDrawableChild(new SliderWidget(this.width / 2 - 100, this.height / 2 - 20, 200, 20,
-            Text.literal("OpenGL Version: " + openGLVersion), openGLVersion / 4.0) {
+                Text.literal("OpenGL Version: " + openGLVersion), openGLVersion / 4.0) {
             @Override
             protected void updateMessage() {
                 this.setMessage(Text.literal("OpenGL Version: " + openGLVersion));
@@ -31,22 +48,24 @@ public class ForceGLOptionsScreen extends Screen {
 
         // Save Button
         this.addDrawableChild(ButtonWidget.builder(
-            Text.literal("Save"),
-            button -> {
-                ForceGL20Config.CONFIG.instance().contextVersionMajor = openGLVersion;
-                ForceGL20Config.CONFIG.save(); // Save to file using YACL
-                if (this.client != null) this.client.setScreen(null); // Return to the game
-            }
+                Text.literal("Save"),
+                button -> {
+                    ForceGL20Config.CONFIG.instance().contextVersionMajor = openGLVersion;
+                    ForceGL20Config.CONFIG.instance().modEnabled = modEnabled; // Save the toggle state
+                    ForceGL20Config.CONFIG.save(); // Save to file using YACL
+                    if (this.client != null) this.client.setScreen(null); // Return to the game
+                }
         ).dimensions(this.width / 2 - 155, this.height / 2 + 40, 150, 20).build());
 
         // Back Button
         this.addDrawableChild(ButtonWidget.builder(
-            Text.literal("Back"),
-            button -> {
-                if (this.client != null) this.client.setScreen(null); // Go back to the previous screen
-            }
+                Text.literal("Back"),
+                button -> {
+                    if (this.client != null) this.client.setScreen(null); // Go back to the previous screen
+                }
         ).dimensions(this.width / 2 + 5, this.height / 2 + 40, 150, 20).build());
     }
+
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
