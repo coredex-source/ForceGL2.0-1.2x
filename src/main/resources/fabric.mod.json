@@ -29,7 +29,8 @@
   ],
   "depends": {
     "minecraft": ">=1.21.4",
-    "yet_another_config_lib_v3": "*"
+    "yet_another_config_lib_v3": "*",
+    "fabric_api": "*"
   },
   "custom": {
 		"modmenu": {
