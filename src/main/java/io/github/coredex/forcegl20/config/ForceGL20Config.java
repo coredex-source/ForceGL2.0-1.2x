@@ -24,11 +24,28 @@ public class ForceGL20Config {
     public int contextVersionMajor = 2;
 
     @SerialEntry
-    public boolean modEnabled = true; // New field to toggle the mod
+    public boolean modEnabled = true;
 
     @SerialEntry
-    public boolean irisIFOverride = false; // Default is false
+    public boolean irisIFOverride = false;
 
+    @SerialEntry
+    public boolean adaptiveRenderScalingEnabled = false;
+
+    @SerialEntry
+    public int minFpsThreshold = 30;
+
+    @SerialEntry
+    public int maxFpsThreshold = 60;
+
+    @SerialEntry
+    public int minRenderDistance = 6;
+
+    @SerialEntry
+    public int maxRenderDistance = 12;
+
+    @SerialEntry
+    public int defaultRenderDistance = 8;
 
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(CONFIG, ((defaults, config, builder) -> builder
@@ -54,6 +71,42 @@ public class ForceGL20Config {
                                 .description(OptionDescription.of(Text.translatable("Allows ForceGL to work even if Iris and ImmediatelyFast are detected together. Default = false.")))
                                 .binding(defaults.irisIFOverride, () -> config.irisIFOverride, newVal -> config.irisIFOverride = newVal)
                                 .controller(BooleanControllerBuilder::create)
+                                .build())
+                        .option(Option.<Boolean>createBuilder()
+                                .name(Text.translatable("Enable Adaptive Render Scaling(ARS)"))
+                                .description(OptionDescription.of(Text.translatable("Dynamically adjust render distance based on FPS.")))
+                                .binding(defaults.adaptiveRenderScalingEnabled, () -> config.adaptiveRenderScalingEnabled, newVal -> config.adaptiveRenderScalingEnabled = newVal)
+                                .controller(BooleanControllerBuilder::create)
+                                .build())
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("Min FPS Threshold"))
+                                .description(OptionDescription.of(Text.translatable("FPS below this value decreases render distance.")))
+                                .binding(defaults.minFpsThreshold, () -> config.minFpsThreshold, newVal -> config.minFpsThreshold = newVal)
+                                .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(10, 60).step(1))
+                                .build())
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("Max FPS Threshold"))
+                                .description(OptionDescription.of(Text.translatable("FPS above this value increases render distance.")))
+                                .binding(defaults.maxFpsThreshold, () -> config.maxFpsThreshold, newVal -> config.maxFpsThreshold = newVal)
+                                .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(30, 120).step(1))
+                                .build())
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("Min Render Distance"))
+                                .description(OptionDescription.of(Text.translatable("Set the minimum render distance.")))
+                                .binding(defaults.minRenderDistance, () -> config.minRenderDistance, newVal -> config.minRenderDistance = newVal)
+                                .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(2, 20).step(1))
+                                .build())
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("Max Render Distance"))
+                                .description(OptionDescription.of(Text.translatable("Set the maximum render distance.")))
+                                .binding(defaults.maxRenderDistance, () -> config.maxRenderDistance, newVal -> config.maxRenderDistance = newVal)
+                                .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(4, 32).step(1))
+                                .build())
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("Default Render Distance"))
+                                .description(OptionDescription.of(Text.translatable("Set the starting point render distance for ARS.")))
+                                .binding(defaults.defaultRenderDistance, () -> config.defaultRenderDistance, newVal -> config.defaultRenderDistance = newVal)
+                                .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(4, 32).step(1))
                                 .build())
                         .build()
                 ))).generateScreen(parent);
