@@ -7,11 +7,13 @@ import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
 
 public class ForceGLOptionsScreen extends Screen {
+    private final Screen parent; // Reference to the parent screen
     private int openGLVersion = ForceGL20Config.CONFIG.instance().contextVersionMajor;
     private boolean modEnabled = ForceGL20Config.CONFIG.instance().modEnabled; // New field
 
-    protected ForceGLOptionsScreen(Text title) {
+    public ForceGLOptionsScreen(Screen parent, Text title) {
         super(title);
+        this.parent = parent; // Store the parent screen
     }
 
     @Override
@@ -53,7 +55,7 @@ public class ForceGLOptionsScreen extends Screen {
                     ForceGL20Config.CONFIG.instance().contextVersionMajor = openGLVersion;
                     ForceGL20Config.CONFIG.instance().modEnabled = modEnabled; // Save the toggle state
                     ForceGL20Config.CONFIG.save(); // Save to file using YACL
-                    if (this.client != null) this.client.setScreen(null); // Return to the game
+                    if (this.client != null) this.client.setScreen(parent); // Return to the parent screen
                 }
         ).dimensions(this.width / 2 - 155, this.height / 2 + 40, 150, 20).build());
 
@@ -61,11 +63,10 @@ public class ForceGLOptionsScreen extends Screen {
         this.addDrawableChild(ButtonWidget.builder(
                 Text.literal("Back"),
                 button -> {
-                    if (this.client != null) this.client.setScreen(null); // Go back to the previous screen
+                    if (this.client != null) this.client.setScreen(parent); // Go back to the parent screen
                 }
         ).dimensions(this.width / 2 + 5, this.height / 2 + 40, 150, 20).build());
     }
-
 
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
@@ -82,10 +83,10 @@ public class ForceGLOptionsScreen extends Screen {
             0xAAAAAA // Light gray color for the note
         );
 
-        String compatability_note = "For best compatability use 3 or 4 if your graphics card supports it.";
+        String compatibilityNote = "For best compatibility use 3 or 4 if your graphics card supports it.";
         context.drawCenteredTextWithShadow(
             this.textRenderer,
-            Text.literal(compatability_note),
+            Text.literal(compatibilityNote),
             this.width / 2,
             this.height / 2 + 25,
             0xAAAAAA // Light gray color for the note
