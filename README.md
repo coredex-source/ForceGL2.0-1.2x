@@ -1,5 +1,5 @@
 # ForceGL2.0
-- A Minecraft mod for [Fabric](https://fabricmc.net/), [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/), [Quilt](https://quiltmc.org/) & [NeoForge](https://neoforged.net) that forces the game to use OpenGL 2.0.
+- A Minecraft mod for [Fabric](https://fabricmc.net/), [Forge](https://files.minecraftforge.net/net/minecraftforge/forge/), [Quilt](https://quiltmc.org/) & [NeoForge](https://neoforged.net) that forces the game to use a specified OpenGL version.
 - You can download it using [CurseForge](https://www.curseforge.com/minecraft/mc-mods/forcegl2-0-remapped), [Modrinth](https://modrinth.com/mod/forcegl2.0-remapped).
 
 ## Mod does not load up on forge or neoforge?
