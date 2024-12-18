@@ -4,7 +4,7 @@ import io.github.coredex.forcegl20.config.ForceGL20Config;
 import net.minecraft.client.MinecraftClient;
 
 public class PerformanceMonitor {
-    private static final int FPS_UPDATE_INTERVAL_MS = 10000; // Check FPS every 500ms
+    private static final int FPS_UPDATE_INTERVAL_MS = 1000; // Check FPS every 500ms
     public static final int MIN_FPS_THRESHOLD = ForceGL20Config.CONFIG.instance().minFpsThreshold;      // Minimum FPS before scaling down
     public static final int MAX_FPS_THRESHOLD = ForceGL20Config.CONFIG.instance().maxFpsThreshold;      // Maximum FPS before scaling up
 

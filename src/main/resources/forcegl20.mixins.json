@@ -4,10 +4,12 @@
   "minVersion": "0.8",
   "client": [
     "GL20Mixin",
-    "OptionsScreenMixin"
+    "OptionsScreenMixin",
+    "ClientChunkManagerMixin"
   ],
   "mixins": [
-    "OptionsScreenMixin"
+    "OptionsScreenMixin",
+    "ClientChunkManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
