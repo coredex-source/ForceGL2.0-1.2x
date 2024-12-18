@@ -47,6 +47,9 @@ public class ForceGL20Config {
     @SerialEntry
     public int defaultRenderDistance = 8;
 
+    @SerialEntry
+    public int checkInterval = 10000;
+
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(CONFIG, ((defaults, config, builder) -> builder
                 .title(Text.translatable("ForceGL Config"))
@@ -107,6 +110,12 @@ public class ForceGL20Config {
                                 .description(OptionDescription.of(Text.translatable("Set the starting point render distance for ARS.")))
                                 .binding(defaults.defaultRenderDistance, () -> config.defaultRenderDistance, newVal -> config.defaultRenderDistance = newVal)
                                 .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(4, 32).step(1))
+                                .build())
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("Default Check Interval (ms)"))
+                                .description(OptionDescription.of(Text.translatable("Set the performance check interval for ARS.")))
+                                .binding(defaults.checkInterval, () -> config.checkInterval, newVal -> config.checkInterval = newVal)
+                                .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(1000, 30000).step(1000))
                                 .build())
                         .build()
                 ))).generateScreen(parent);
