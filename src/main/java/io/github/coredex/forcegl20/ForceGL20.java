@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class ForceGL20 {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger("ForceGL20");
+    public static final Logger LOGGER = LoggerFactory.getLogger("ForceGL");
 
     public static final ImmutableMap<Integer, HintOverride> GLFW_OVERRIDE_VALUES;
     public static final ImmutableMap<Integer, String> GLFW_HINT_NAMES;
@@ -39,19 +39,19 @@ public class ForceGL20 {
         boolean irisIFOverride = ForceGL20Config.CONFIG.instance().irisIFOverride;
 
         if (irisPresent && immediatelyFastPresent && !irisIFOverride) {
-            LOGGER.warn("ForceGL20 is disabled because it can be incompatible with Iris and ImmediatelyFast if both are used together and shaders are being used. Override this behavior by changing \"irisIFOverride\" to true in the config manually or by using ModMenu/YACL.");
+            LOGGER.warn("ForceGL is disabled because it can be incompatible with Iris and ImmediatelyFast if both are used together and shaders are being used. Override this behavior by changing \"irisIFOverride\" to true in the config manually or by using ModMenu/YACL.");
             GLFW_OVERRIDE_VALUES = ImmutableMap.of();
             GLFW_HINT_NAMES = ImmutableMap.of();
         } else {
             if (irisPresent && immediatelyFastPresent && irisIFOverride) {
-                LOGGER.info("Iris-ImmediatelyFast compatibility override enabled. Proceeding with ForceGL20 initialization.");
+                LOGGER.info("Iris-ImmediatelyFast compatibility override enabled. Proceeding with ForceGL initialization.");
             }
             if (modEnabled) {
-                LOGGER.info("ForceGL20 mod is enabled. Initializing...");
+                LOGGER.info("ForceGL mod is enabled. Initializing...");
                 GLFW_OVERRIDE_VALUES = createGlfwOverrideValues();
                 GLFW_HINT_NAMES = createGlfwHintNames();
             } else {
-                LOGGER.info("ForceGL20 mod is disabled. Skipping initialization.");
+                LOGGER.info("ForceGL mod is disabled. Skipping initialization.");
                 GLFW_OVERRIDE_VALUES = ImmutableMap.of();
                 GLFW_HINT_NAMES = ImmutableMap.of();
             }

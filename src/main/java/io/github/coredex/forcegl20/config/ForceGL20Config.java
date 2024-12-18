@@ -51,7 +51,7 @@ public class ForceGL20Config {
                                 .build())
                         .option(Option.<Boolean>createBuilder()
                                 .name(Text.translatable("Enable Iris-ImmediatelyFast Override"))
-                                .description(OptionDescription.of(Text.translatable("Allows ForceGL20 to work even if Iris and ImmediatelyFast are detected together. Default = false.")))
+                                .description(OptionDescription.of(Text.translatable("Allows ForceGL to work even if Iris and ImmediatelyFast are detected together. Default = false.")))
                                 .binding(defaults.irisIFOverride, () -> config.irisIFOverride, newVal -> config.irisIFOverride = newVal)
                                 .controller(BooleanControllerBuilder::create)
                                 .build())
