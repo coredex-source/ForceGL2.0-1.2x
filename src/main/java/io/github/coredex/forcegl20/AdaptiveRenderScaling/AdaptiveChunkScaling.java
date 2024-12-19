@@ -4,8 +4,8 @@ import io.github.coredex.forcegl20.config.ForceGL20Config;
 import net.minecraft.client.MinecraftClient;
 
 public class AdaptiveChunkScaling {
-    private static final int MIN_RENDER_DISTANCE = ForceGL20Config.CONFIG.instance().minRenderDistance;  // Minimum render distance
-    private static final int MAX_RENDER_DISTANCE = ForceGL20Config.CONFIG.instance().maxRenderDistance; // Maximum render distance
+    public static int MIN_RENDER_DISTANCE = ForceGL20Config.CONFIG.instance().minRenderDistance;  // Minimum render distance
+    public static int MAX_RENDER_DISTANCE = ForceGL20Config.CONFIG.instance().maxRenderDistance; // Maximum render distance
 
     private static int lastRenderDistance = ForceGL20Config.CONFIG.instance().defaultRenderDistance; // Default render distance
 

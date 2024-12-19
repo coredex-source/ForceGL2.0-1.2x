@@ -10,6 +10,7 @@ public class ForceGLOptionsScreen extends Screen {
     private final Screen parent;
     private int openGLVersion = ForceGL20Config.CONFIG.instance().contextVersionMajor;
     private boolean modEnabled = ForceGL20Config.CONFIG.instance().modEnabled; 
+    public static boolean ARScalingEnabled = ForceGL20Config.CONFIG.instance().adaptiveRenderScalingEnabled;
 
     public ForceGLOptionsScreen(Screen parent, Text title) {
         super(title);
@@ -19,10 +20,10 @@ public class ForceGLOptionsScreen extends Screen {
     @Override
     protected void init() {
         ButtonWidget toggleModButton = ButtonWidget.builder(
-            Text.literal("Enable Mod: " + (modEnabled ? "ON" : "OFF")),
+            Text.literal("Enable GL Mod: " + (modEnabled ? "ON" : "OFF")),
             button -> {
                 modEnabled = !modEnabled;
-                button.setMessage(Text.literal("Enable Mod: " + (modEnabled ? "ON" : "OFF")));
+                button.setMessage(Text.literal("Enable GL Mod: " + (modEnabled ? "ON" : "OFF")));
             }
         ).dimensions(
             this.width / 2 - 100,

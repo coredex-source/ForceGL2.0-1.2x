@@ -4,10 +4,10 @@ import io.github.coredex.forcegl20.config.ForceGL20Config;
 import net.minecraft.client.MinecraftClient;
 
 public class PerformanceMonitor {
-    private static final int FPS_UPDATE_INTERVAL_MS = ForceGL20Config.CONFIG.instance().updateInterval;
-    private static final int FPS_CHECK_INTERVAL_MS = ForceGL20Config.CONFIG.instance().checkInterval;
-    public static final int MIN_FPS_THRESHOLD = ForceGL20Config.CONFIG.instance().minFpsThreshold;
-    public static final int MAX_FPS_THRESHOLD = ForceGL20Config.CONFIG.instance().maxFpsThreshold;
+    public static int FPS_UPDATE_INTERVAL_MS = ForceGL20Config.CONFIG.instance().updateInterval;
+    public static int FPS_CHECK_INTERVAL_MS = ForceGL20Config.CONFIG.instance().checkInterval;
+    public static int MIN_FPS_THRESHOLD = ForceGL20Config.CONFIG.instance().minFpsThreshold;
+    public static int MAX_FPS_THRESHOLD = ForceGL20Config.CONFIG.instance().maxFpsThreshold;
 
     private long lastUpdateTime;
     private long lastCheckTime;
