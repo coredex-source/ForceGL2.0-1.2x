@@ -2,7 +2,8 @@ package io.github.coredex.forcegl20;
 
 import com.google.common.collect.ImmutableMap;
 
-import io.github.coredex.forcegl20.ars.PerformanceMonitor;
+import io.github.coredex.forcegl20.AdaptiveRenderScaling.AdaptiveChunkScaling;
+import io.github.coredex.forcegl20.AdaptiveRenderScaling.PerformanceMonitor;
 import io.github.coredex.forcegl20.config.ForceGL20Config;
 import io.github.coredex.forcegl20.override.HintOverride;
 import io.github.coredex.forcegl20.override.OverrideType;
@@ -44,6 +45,7 @@ public class ForceGL20 {
 
         if (ARSEnabled){
             ClientTickEvents.END_CLIENT_TICK.register(client -> PERFORMANCE_MONITOR.tick());
+            AdaptiveChunkScaling.setDefaultRenderDistance();
             LOGGER.info("Adaptive Render Scaling is Enabled");
         } else {
             LOGGER.info("Adaptive Render Scaling is Disabled");

@@ -1,13 +1,17 @@
-package io.github.coredex.forcegl20.ars;
+package io.github.coredex.forcegl20.AdaptiveRenderScaling;
 
 import io.github.coredex.forcegl20.config.ForceGL20Config;
 import net.minecraft.client.MinecraftClient;
 
-public class AdaptiveRenderScaling {
+public class AdaptiveChunkScaling {
     private static final int MIN_RENDER_DISTANCE = ForceGL20Config.CONFIG.instance().minRenderDistance;  // Minimum render distance
     private static final int MAX_RENDER_DISTANCE = ForceGL20Config.CONFIG.instance().maxRenderDistance; // Maximum render distance
 
     private static int lastRenderDistance = ForceGL20Config.CONFIG.instance().defaultRenderDistance; // Default render distance
+
+    public static void setDefaultRenderDistance(){
+        RenderScalingTools.setRenderDistance(ForceGL20Config.CONFIG.instance().defaultRenderDistance);
+    }
 
     public static void adjustRenderDistance(int fps) {
         MinecraftClient client = MinecraftClient.getInstance();
@@ -15,18 +19,20 @@ public class AdaptiveRenderScaling {
 
         int newRenderDistance = lastRenderDistance;
 
-        if (fps < PerformanceMonitor.MIN_FPS_THRESHOLD) {
-            // Decrease render distance
+        if (fps < PerformanceMonitor.MIN_FPS_THRESHOLD - 10) {
+            newRenderDistance = MIN_RENDER_DISTANCE;
+        } else if (fps < PerformanceMonitor.MIN_FPS_THRESHOLD) {
             newRenderDistance = Math.max(MIN_RENDER_DISTANCE, lastRenderDistance - 1);
+        } else if (fps > PerformanceMonitor.MAX_FPS_THRESHOLD + 15) {
+            newRenderDistance = MAX_RENDER_DISTANCE;
         } else if (fps > PerformanceMonitor.MAX_FPS_THRESHOLD) {
-            // Increase render distance
-            newRenderDistance = Math.min(MAX_RENDER_DISTANCE, lastRenderDistance + 1);
+            newRenderDistance = Math.min(MAX_RENDER_DISTANCE, lastRenderDistance + 3);
         }
 
         if (newRenderDistance != lastRenderDistance) {
-            client.options.setServerViewDistance(newRenderDistance);
-            client.options.getViewDistance().setValue(newRenderDistance);
+            RenderScalingTools.setRenderDistance(newRenderDistance);
             lastRenderDistance = newRenderDistance;
         }
     }
+
 }

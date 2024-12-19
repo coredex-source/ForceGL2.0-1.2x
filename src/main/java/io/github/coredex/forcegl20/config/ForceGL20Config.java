@@ -48,7 +48,10 @@ public class ForceGL20Config {
     public int defaultRenderDistance = 8;
 
     @SerialEntry
-    public int checkInterval = 10000;
+    public int checkInterval = 500;
+
+    @SerialEntry
+    public int updateInterval = 10000;
 
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(CONFIG, ((defaults, config, builder) -> builder
@@ -115,6 +118,12 @@ public class ForceGL20Config {
                                 .name(Text.translatable("Default Check Interval (ms)"))
                                 .description(OptionDescription.of(Text.translatable("Set the performance check interval for ARS.")))
                                 .binding(defaults.checkInterval, () -> config.checkInterval, newVal -> config.checkInterval = newVal)
+                                .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(500, 2000).step(500))
+                                .build())
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("Default Update Interval (ms)"))
+                                .description(OptionDescription.of(Text.translatable("Set the performance update interval for ARS.")))
+                                .binding(defaults.updateInterval, () -> config.updateInterval, newVal -> config.updateInterval = newVal)
                                 .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(1000, 30000).step(1000))
                                 .build())
                         .build()
