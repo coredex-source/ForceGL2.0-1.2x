@@ -31,25 +31,6 @@ public class ForceGL20 {
     private static final PerformanceMonitor PERFORMANCE_MONITOR = new PerformanceMonitor();
     public static boolean isListenerActive = true;
 
-    public static void init() {
-        LOGGER.info("Initializing ForceGL20...");
-
-        Path configFilePath = YACLPlatform.getConfigDir().resolve("forcegl20.json");
-        FileWatcher fileWatcher = new FileWatcher(configFilePath, () -> {
-            try {
-                LOGGER.info("Configuration file changed. Reloading...");
-                ForceGL20Config.CONFIG.load();
-                DynamicConfigUpdates.applyDynamicChanges();
-            } catch (Exception e) {
-                LOGGER.error("Failed to reload configuration: ", e);
-            }
-        });
-
-        Thread watcherThread = new Thread(fileWatcher, "ForceGL20-ConfigWatcher");
-        watcherThread.setDaemon(true);
-        watcherThread.start();
-    }
-
     private static final Set<Integer> GLFW_HINT_CODES = Set.of(
             0x00020001, 0x00020002, 0x00020003, 0x00020004, 0x00020005, 0x00020006,
             0x00020007, 0x00020008, 0x00020009, 0x0002000A, 0x0002000B, 0x0002000C,
@@ -67,6 +48,23 @@ public class ForceGL20 {
         boolean ARSEnabled = ForceGL20Config.CONFIG.instance().adaptiveRenderScalingEnabled;
         boolean modEnabled = ForceGL20Config.CONFIG.instance().modEnabled;
         boolean irisIFOverride = ForceGL20Config.CONFIG.instance().irisIFOverride;
+
+        LOGGER.info("Initializing ForceGL20 ConfigWatcher...");
+
+        Path configFilePath = YACLPlatform.getConfigDir().resolve("forcegl20.json");
+        FileWatcher fileWatcher = new FileWatcher(configFilePath, () -> {
+            try {
+                LOGGER.info("Configuration file changed. Reloading...");
+                ForceGL20Config.CONFIG.load();
+                DynamicConfigUpdates.applyDynamicChanges();
+            } catch (Exception e) {
+                LOGGER.error("Failed to reload configuration: ", e);
+            }
+        });
+
+        Thread watcherThread = new Thread(fileWatcher, "ForceGL20-ConfigWatcher");
+        watcherThread.setDaemon(true);
+        watcherThread.start();
 
         if (ARSEnabled){
             ClientTickEvents.END_CLIENT_TICK.register(client -> {
