@@ -6,7 +6,8 @@
     "GL20Mixin",
     "OptionsScreenMixin",
     "WindowMixin",
-    "GameRendererMixin"
+    "GameRendererMixin",
+    "DebugHudMixin"
   ],
   "mixins": [
     "OptionsScreenMixin"

@@ -27,6 +27,7 @@ import java.util.Set;
 public class ForceGL20 {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("ForceGL");
+    public static final String MOD_VERSION = "3.0.0-beta.2"; // Add this line to define the version
 
     public static final ImmutableMap<Integer, HintOverride> GLFW_OVERRIDE_VALUES;
     public static final ImmutableMap<Integer, String> GLFW_HINT_NAMES;
