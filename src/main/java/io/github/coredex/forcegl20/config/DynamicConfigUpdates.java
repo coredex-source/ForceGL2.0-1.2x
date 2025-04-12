@@ -3,8 +3,17 @@ package io.github.coredex.forcegl20.config;
 import io.github.coredex.forcegl20.AdaptiveRenderScaling.AdaptiveChunkScaling;
 import io.github.coredex.forcegl20.AdaptiveRenderScaling.PerformanceMonitor;
 import io.github.coredex.forcegl20.ForceGL20;
+
 public class DynamicConfigUpdates {
     public static void applyDynamicChanges() {
+        // Update ForceGL20 compatibility flags
+        ForceGL20.forceCompatibilityMode = ForceGL20Config.CONFIG.instance().forceCompatibilityMode;
+        ForceGL20.COMPATIBILITY_FLAGS.put("DISABLE_SHADER_COMPILATIONS", ForceGL20.forceCompatibilityMode);
+        ForceGL20.COMPATIBILITY_FLAGS.put("FORCE_LEGACY_RENDERING", ForceGL20.forceCompatibilityMode);
+        ForceGL20.COMPATIBILITY_FLAGS.put("DISABLE_VBO", ForceGL20.forceCompatibilityMode && 
+                                                       ForceGL20Config.CONFIG.instance().disableVBO);
+        
+        // Update ARS settings
         if (ForceGL20Config.CONFIG.instance().adaptiveRenderScalingEnabled) {
             PerformanceMonitor.MIN_FPS_THRESHOLD = ForceGL20Config.CONFIG.instance().minFpsThreshold;
             PerformanceMonitor.MAX_FPS_THRESHOLD = ForceGL20Config.CONFIG.instance().maxFpsThreshold;
