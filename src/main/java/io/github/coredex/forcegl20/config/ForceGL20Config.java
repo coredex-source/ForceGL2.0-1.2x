@@ -25,6 +25,9 @@ public class ForceGL20Config {
     public int contextVersionMajor = 2;
 
     @SerialEntry
+    public int contextVersionMinor = 0;
+
+    @SerialEntry
     public boolean modEnabled = true;
 
     @SerialEntry
@@ -87,6 +90,14 @@ public class ForceGL20Config {
                                             .range(1, 4) // OpenGL major version range
                                             .step(1))
                                     .build())
+                        .option(Option.<Integer>createBuilder()
+                                .name(Text.translatable("version Minor"))
+                                .description(OptionDescription.of(Text.translatable("GLSL Minor")))
+                                .binding(defaults.contextVersionMinor, () -> config.contextVersionMinor, newVal -> config.contextVersionMinor = newVal)
+                                .controller(opt -> IntegerSliderControllerBuilder.create(opt)
+                                        .range(0, 9)
+                                        .step(1))
+                                .build())
                             .option(Option.<Boolean>createBuilder()
                                     .name(Text.translatable("Disable VBO"))
                                     .description(OptionDescription.of(Text.translatable("Disables Vertex Buffer Objects for maximum compatibility with legacy GPUs. Only works in compatibility mode.")))

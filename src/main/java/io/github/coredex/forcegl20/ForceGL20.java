@@ -155,9 +155,10 @@ public class ForceGL20 {
 
         int contextVersionMajor = ForceGL20Config.CONFIG.instance().forceCompatibilityMode ? 
             2 : ForceGL20Config.CONFIG.instance().contextVersionMajor;
+        int contextVersionMinor = ForceGL20Config.CONFIG.instance().contextVersionMinor;
         
         overrideBuilder.put(GLFW.GLFW_CONTEXT_VERSION_MAJOR, new HintOverride(OverrideType.SET_VALUE, contextVersionMajor));
-        overrideBuilder.put(GLFW.GLFW_CONTEXT_VERSION_MINOR, new HintOverride(OverrideType.SET_VALUE, 0));
+        overrideBuilder.put(GLFW.GLFW_CONTEXT_VERSION_MINOR, new HintOverride(OverrideType.SET_VALUE, contextVersionMinor));
         overrideBuilder.put(GLFW.GLFW_OPENGL_PROFILE, new HintOverride(OverrideType.SET_VALUE, GLFW.GLFW_OPENGL_ANY_PROFILE));
         overrideBuilder.put(GLFW.GLFW_OPENGL_FORWARD_COMPAT, new HintOverride(OverrideType.SET_VALUE, GLFW.GLFW_FALSE));
         

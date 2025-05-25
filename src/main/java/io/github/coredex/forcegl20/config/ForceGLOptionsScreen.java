@@ -10,6 +10,7 @@ import net.minecraft.text.Text;
 public class ForceGLOptionsScreen extends Screen {
     private final Screen parent;
     private int openGLVersion = ForceGL20Config.CONFIG.instance().contextVersionMajor;
+    private int openGLVersionMinor = ForceGL20Config.CONFIG.instance().contextVersionMinor;
     private boolean modEnabled = ForceGL20Config.CONFIG.instance().modEnabled;
     private boolean irisIFOverride = ForceGL20Config.CONFIG.instance().irisIFOverride;
     private boolean forceCompatibilityMode = ForceGL20Config.CONFIG.instance().forceCompatibilityMode;
@@ -67,6 +68,7 @@ public class ForceGLOptionsScreen extends Screen {
                 Text.literal("Save"),
                 button -> {
                     ForceGL20Config.CONFIG.instance().contextVersionMajor = forceCompatibilityMode ? 2 : openGLVersion;
+                    ForceGL20Config.CONFIG.instance().contextVersionMinor = openGLVersionMinor;
                     ForceGL20Config.CONFIG.instance().modEnabled = modEnabled;
                     ForceGL20Config.CONFIG.instance().irisIFOverride = irisIFOverride;
                     ForceGL20Config.CONFIG.instance().forceCompatibilityMode = forceCompatibilityMode;
