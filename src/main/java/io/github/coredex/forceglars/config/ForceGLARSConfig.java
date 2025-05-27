@@ -1,4 +1,4 @@
-package io.github.coredex.forcegl20.config;
+package io.github.coredex.forceglars.config;
 
 import dev.isxander.yacl3.api.ConfigCategory;
 import dev.isxander.yacl3.api.Option;
@@ -14,8 +14,8 @@ import dev.isxander.yacl3.platform.YACLPlatform;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
 
-public class ForceGL20Config {
-    public static final ConfigClassHandler<ForceGL20Config> CONFIG = ConfigClassHandler.createBuilder(ForceGL20Config.class)
+public class ForceGLARSConfig {
+    public static final ConfigClassHandler<ForceGLARSConfig> CONFIG = ConfigClassHandler.createBuilder(ForceGLARSConfig.class)
             .serializer(config -> GsonConfigSerializerBuilder.create(config)
                     .setPath(YACLPlatform.getConfigDir().resolve("forcegl20.json"))
                     .build())

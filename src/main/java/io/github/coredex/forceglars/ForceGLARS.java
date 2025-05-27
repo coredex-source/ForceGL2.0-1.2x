@@ -1,21 +1,22 @@
-package io.github.coredex.forcegl20;
+package io.github.coredex.forceglars;
 
 import com.google.common.collect.ImmutableMap;
 
 import dev.isxander.yacl3.platform.YACLPlatform;
-import io.github.coredex.forcegl20.AdaptiveRenderScaling.AdaptiveChunkScaling;
-import io.github.coredex.forcegl20.AdaptiveRenderScaling.PerformanceMonitor;
-import io.github.coredex.forcegl20.config.DynamicConfigUpdates;
-import io.github.coredex.forcegl20.config.ForceGL20Config;
-import io.github.coredex.forcegl20.override.HintOverride;
-import io.github.coredex.forcegl20.override.OverrideType;
+import io.github.coredex.forceglars.AdaptiveRenderScaling.AdaptiveChunkScaling;
+import io.github.coredex.forceglars.AdaptiveRenderScaling.PerformanceMonitor;
+import io.github.coredex.forceglars.config.DynamicConfigUpdates;
+import io.github.coredex.forceglars.config.ForceGLARSConfig;
+import io.github.coredex.forceglars.override.HintOverride;
+import io.github.coredex.forceglars.override.OverrideType;
+import io.github.coredex.forceglars.utils.FileWatcher;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import io.github.coredex.forcegl20.utils.FileWatcher;
+
 import java.nio.file.Path;
 
 import java.lang.reflect.Field;
@@ -24,7 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class ForceGL20 {
+public class ForceGLARS {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("ForceGL");
     public static final String MOD_VERSION = "3.0.0-beta.2"; // Add this line to define the version
@@ -50,10 +51,10 @@ public class ForceGL20 {
     static {
         boolean irisPresent = FabricLoader.getInstance().isModLoaded("iris");
         boolean immediatelyFastPresent = FabricLoader.getInstance().isModLoaded("immediatelyfast");
-        boolean ARSEnabled = ForceGL20Config.CONFIG.instance().adaptiveRenderScalingEnabled;
-        boolean modEnabled = ForceGL20Config.CONFIG.instance().modEnabled;
-        boolean irisIFOverride = ForceGL20Config.CONFIG.instance().irisIFOverride;
-        forceCompatibilityMode = ForceGL20Config.CONFIG.instance().forceCompatibilityMode;
+        boolean ARSEnabled = ForceGLARSConfig.CONFIG.instance().adaptiveRenderScalingEnabled;
+        boolean modEnabled = ForceGLARSConfig.CONFIG.instance().modEnabled;
+        boolean irisIFOverride = ForceGLARSConfig.CONFIG.instance().irisIFOverride;
+        forceCompatibilityMode = ForceGLARSConfig.CONFIG.instance().forceCompatibilityMode;
 
         LOGGER.info("Initializing ForceGL20 ConfigWatcher...");
 
@@ -61,7 +62,7 @@ public class ForceGL20 {
         FileWatcher fileWatcher = new FileWatcher(configFilePath, () -> {
             try {
                 LOGGER.info("Configuration file changed. Reloading...");
-                ForceGL20Config.CONFIG.load();
+                ForceGLARSConfig.CONFIG.load();
                 DynamicConfigUpdates.applyDynamicChanges();
             } catch (Exception e) {
                 LOGGER.error("Failed to reload configuration: ", e);
@@ -75,7 +76,7 @@ public class ForceGL20 {
         // Initialize compatibility flags
         COMPATIBILITY_FLAGS.put("DISABLE_SHADER_COMPILATIONS", forceCompatibilityMode);
         COMPATIBILITY_FLAGS.put("FORCE_LEGACY_RENDERING", forceCompatibilityMode);
-        COMPATIBILITY_FLAGS.put("DISABLE_VBO", forceCompatibilityMode && ForceGL20Config.CONFIG.instance().disableVBO);
+        COMPATIBILITY_FLAGS.put("DISABLE_VBO", forceCompatibilityMode && ForceGLARSConfig.CONFIG.instance().disableVBO);
         COMPATIBILITY_FLAGS.put("USE_LEGACY_BUFFER_RENDERING", forceCompatibilityMode);
 
         if (forceCompatibilityMode) {
@@ -97,7 +98,7 @@ public class ForceGL20 {
             System.setProperty("sun.java2d.opengl", "false");
 
             // Disable advanced features that might not be supported
-            if (ForceGL20Config.CONFIG.instance().disableVBO) {
+            if (ForceGLARSConfig.CONFIG.instance().disableVBO) {
                 LOGGER.info("VBO/Advanced vertex features disabled for maximum compatibility");
                 System.setProperty("joml.format.decimals", "3"); // Reduce precision for older GPUs
                 // Disable fancy graphics and smooth lighting by default in compatibility mode
@@ -124,7 +125,7 @@ public class ForceGL20 {
             });
             ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
                 AdaptiveChunkScaling.setDefaultRenderDistance();
-                LOGGER.info("Default render distance set to {}.", ForceGL20Config.CONFIG.instance().defaultRenderDistance);
+                LOGGER.info("Default render distance set to {}.", ForceGLARSConfig.CONFIG.instance().defaultRenderDistance);
             });
             LOGGER.warn("Adaptive Render Scaling is Enabled");
         } else {
@@ -153,9 +154,9 @@ public class ForceGL20 {
     private static ImmutableMap<Integer, HintOverride> createGlfwOverrideValues() {
         ImmutableMap.Builder<Integer, HintOverride> overrideBuilder = ImmutableMap.builder();
 
-        int contextVersionMajor = ForceGL20Config.CONFIG.instance().forceCompatibilityMode ? 
-            2 : ForceGL20Config.CONFIG.instance().contextVersionMajor;
-        int contextVersionMinor = ForceGL20Config.CONFIG.instance().contextVersionMinor;
+        int contextVersionMajor = ForceGLARSConfig.CONFIG.instance().forceCompatibilityMode ? 
+            2 : ForceGLARSConfig.CONFIG.instance().contextVersionMajor;
+        int contextVersionMinor = ForceGLARSConfig.CONFIG.instance().contextVersionMinor;
         
         overrideBuilder.put(GLFW.GLFW_CONTEXT_VERSION_MAJOR, new HintOverride(OverrideType.SET_VALUE, contextVersionMajor));
         overrideBuilder.put(GLFW.GLFW_CONTEXT_VERSION_MINOR, new HintOverride(OverrideType.SET_VALUE, contextVersionMinor));

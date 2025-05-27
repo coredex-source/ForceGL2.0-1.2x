@@ -1,4 +1,4 @@
-package io.github.coredex.forcegl20.config;
+package io.github.coredex.forceglars.config;
 
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -9,22 +9,22 @@ import net.minecraft.text.Text;
 
 public class ForceGLOptionsScreen extends Screen {
     private final Screen parent;
-    private int openGLVersion = ForceGL20Config.CONFIG.instance().contextVersionMajor;
-    private int openGLVersionMinor = ForceGL20Config.CONFIG.instance().contextVersionMinor;
-    private boolean modEnabled = ForceGL20Config.CONFIG.instance().modEnabled;
-    private boolean irisIFOverride = ForceGL20Config.CONFIG.instance().irisIFOverride;
-    private boolean forceCompatibilityMode = ForceGL20Config.CONFIG.instance().forceCompatibilityMode;
-    private boolean disableVBO = ForceGL20Config.CONFIG.instance().disableVBO;
+    private int openGLVersion = ForceGLARSConfig.CONFIG.instance().contextVersionMajor;
+    private int openGLVersionMinor = ForceGLARSConfig.CONFIG.instance().contextVersionMinor;
+    private boolean modEnabled = ForceGLARSConfig.CONFIG.instance().modEnabled;
+    private boolean irisIFOverride = ForceGLARSConfig.CONFIG.instance().irisIFOverride;
+    private boolean forceCompatibilityMode = ForceGLARSConfig.CONFIG.instance().forceCompatibilityMode;
+    private boolean disableVBO = ForceGLARSConfig.CONFIG.instance().disableVBO;
 
     // Do not touch the line below as it's required in a different class.
-    public static boolean ARScalingEnabled = ForceGL20Config.CONFIG.instance().adaptiveRenderScalingEnabled;
-    private int minFpsThreshold = ForceGL20Config.CONFIG.instance().minFpsThreshold;
-    private int maxFpsThreshold = ForceGL20Config.CONFIG.instance().maxFpsThreshold;
-    private int minRenderDistance = ForceGL20Config.CONFIG.instance().minRenderDistance;
-    private int maxRenderDistance = ForceGL20Config.CONFIG.instance().maxRenderDistance;
-    private int defaultRenderDistance = ForceGL20Config.CONFIG.instance().defaultRenderDistance;
-    private int checkInterval = ForceGL20Config.CONFIG.instance().checkInterval;
-    private int updateInterval = ForceGL20Config.CONFIG.instance().updateInterval;
+    public static boolean ARScalingEnabled = ForceGLARSConfig.CONFIG.instance().adaptiveRenderScalingEnabled;
+    private int minFpsThreshold = ForceGLARSConfig.CONFIG.instance().minFpsThreshold;
+    private int maxFpsThreshold = ForceGLARSConfig.CONFIG.instance().maxFpsThreshold;
+    private int minRenderDistance = ForceGLARSConfig.CONFIG.instance().minRenderDistance;
+    private int maxRenderDistance = ForceGLARSConfig.CONFIG.instance().maxRenderDistance;
+    private int defaultRenderDistance = ForceGLARSConfig.CONFIG.instance().defaultRenderDistance;
+    private int checkInterval = ForceGLARSConfig.CONFIG.instance().checkInterval;
+    private int updateInterval = ForceGLARSConfig.CONFIG.instance().updateInterval;
 
     private boolean showOpenGLConfig = true; // Track which config is currently shown
 
@@ -67,21 +67,21 @@ public class ForceGLOptionsScreen extends Screen {
         this.addDrawableChild(ButtonWidget.builder(
                 Text.literal("Save"),
                 button -> {
-                    ForceGL20Config.CONFIG.instance().contextVersionMajor = forceCompatibilityMode ? 2 : openGLVersion;
-                    ForceGL20Config.CONFIG.instance().contextVersionMinor = openGLVersionMinor;
-                    ForceGL20Config.CONFIG.instance().modEnabled = modEnabled;
-                    ForceGL20Config.CONFIG.instance().irisIFOverride = irisIFOverride;
-                    ForceGL20Config.CONFIG.instance().forceCompatibilityMode = forceCompatibilityMode;
-                    ForceGL20Config.CONFIG.instance().disableVBO = disableVBO;
-                    ForceGL20Config.CONFIG.instance().adaptiveRenderScalingEnabled = ARScalingEnabled;
-                    ForceGL20Config.CONFIG.instance().minFpsThreshold = minFpsThreshold;
-                    ForceGL20Config.CONFIG.instance().maxFpsThreshold = maxFpsThreshold;
-                    ForceGL20Config.CONFIG.instance().minRenderDistance = minRenderDistance;
-                    ForceGL20Config.CONFIG.instance().maxRenderDistance = maxRenderDistance;
-                    ForceGL20Config.CONFIG.instance().defaultRenderDistance = defaultRenderDistance;
-                    ForceGL20Config.CONFIG.instance().checkInterval = checkInterval;
-                    ForceGL20Config.CONFIG.instance().updateInterval = updateInterval;
-                    ForceGL20Config.CONFIG.save();
+                    ForceGLARSConfig.CONFIG.instance().contextVersionMajor = forceCompatibilityMode ? 2 : openGLVersion;
+                    ForceGLARSConfig.CONFIG.instance().contextVersionMinor = openGLVersionMinor;
+                    ForceGLARSConfig.CONFIG.instance().modEnabled = modEnabled;
+                    ForceGLARSConfig.CONFIG.instance().irisIFOverride = irisIFOverride;
+                    ForceGLARSConfig.CONFIG.instance().forceCompatibilityMode = forceCompatibilityMode;
+                    ForceGLARSConfig.CONFIG.instance().disableVBO = disableVBO;
+                    ForceGLARSConfig.CONFIG.instance().adaptiveRenderScalingEnabled = ARScalingEnabled;
+                    ForceGLARSConfig.CONFIG.instance().minFpsThreshold = minFpsThreshold;
+                    ForceGLARSConfig.CONFIG.instance().maxFpsThreshold = maxFpsThreshold;
+                    ForceGLARSConfig.CONFIG.instance().minRenderDistance = minRenderDistance;
+                    ForceGLARSConfig.CONFIG.instance().maxRenderDistance = maxRenderDistance;
+                    ForceGLARSConfig.CONFIG.instance().defaultRenderDistance = defaultRenderDistance;
+                    ForceGLARSConfig.CONFIG.instance().checkInterval = checkInterval;
+                    ForceGLARSConfig.CONFIG.instance().updateInterval = updateInterval;
+                    ForceGLARSConfig.CONFIG.save();
                     DynamicConfigUpdates.applyDynamicChanges();
                     if (this.client != null) this.client.setScreen(parent);
                 }

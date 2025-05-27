@@ -1,4 +1,4 @@
-package io.github.coredex.forcegl20.override;
+package io.github.coredex.forceglars.override;
 
 public class HintOverride {
 

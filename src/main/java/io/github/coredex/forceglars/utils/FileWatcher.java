@@ -1,4 +1,4 @@
-package io.github.coredex.forcegl20.utils;
+package io.github.coredex.forceglars.utils;
 
 import java.io.IOException;
 import java.nio.file.*;

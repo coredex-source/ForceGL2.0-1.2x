@@ -1,16 +1,16 @@
-package io.github.coredex.forcegl20.AdaptiveRenderScaling;
+package io.github.coredex.forceglars.AdaptiveRenderScaling;
 
-import io.github.coredex.forcegl20.config.ForceGL20Config;
+import io.github.coredex.forceglars.config.ForceGLARSConfig;
 import net.minecraft.client.MinecraftClient;
 
 public class AdaptiveChunkScaling {
-    public static int MIN_RENDER_DISTANCE = ForceGL20Config.CONFIG.instance().minRenderDistance;  // Minimum render distance
-    public static int MAX_RENDER_DISTANCE = ForceGL20Config.CONFIG.instance().maxRenderDistance; // Maximum render distance
+    public static int MIN_RENDER_DISTANCE = ForceGLARSConfig.CONFIG.instance().minRenderDistance;  // Minimum render distance
+    public static int MAX_RENDER_DISTANCE = ForceGLARSConfig.CONFIG.instance().maxRenderDistance; // Maximum render distance
 
-    private static int lastRenderDistance = ForceGL20Config.CONFIG.instance().defaultRenderDistance; // Default render distance
+    private static int lastRenderDistance = ForceGLARSConfig.CONFIG.instance().defaultRenderDistance; // Default render distance
 
     public static void setDefaultRenderDistance(){
-        RenderScalingTools.setRenderDistance(ForceGL20Config.CONFIG.instance().defaultRenderDistance);
+        RenderScalingTools.setRenderDistance(ForceGLARSConfig.CONFIG.instance().defaultRenderDistance);
     }
 
     public static void adjustRenderDistance(int fps) {

@@ -1,4 +1,4 @@
-package io.github.coredex.forcegl20.AdaptiveRenderScaling;
+package io.github.coredex.forceglars.AdaptiveRenderScaling;
 
 import net.minecraft.client.MinecraftClient;
 

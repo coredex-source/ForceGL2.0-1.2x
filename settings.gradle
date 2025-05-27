@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "ForceGL20"
+rootProject.name = "ForceGLARS"

@@ -1,4 +1,4 @@
-package io.github.coredex.forcegl20.config;
+package io.github.coredex.forceglars.config;
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
@@ -9,6 +9,6 @@ import net.fabricmc.api.Environment;
 public class ModMenuIntegration implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return ForceGL20Config::configScreen;
+        return ForceGLARSConfig::configScreen;
     }
 }
