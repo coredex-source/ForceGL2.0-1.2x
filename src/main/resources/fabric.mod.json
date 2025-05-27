@@ -17,18 +17,18 @@
   "environment": "client",
   "entrypoints": {
 		"main": [
-			"io.github.coredex.forcegl20.ForceGL20Mod"
+			"io.github.coredex.forceglars.ForceGLARSMod"
 		],
 		"modmenu": [
-			"io.github.coredex.forcegl20.config.ModMenuIntegration"
+			"io.github.coredex.forceglars.config.ModMenuIntegration"
 		]
 	},
 
   "mixins": [
-    "forcegl20.mixins.json"
+    "forceglars.mixins.json"
   ],
   "depends": {
-    "minecraft": ">=1.21.4",
+    "minecraft": ">=1.21.5",
     "yet_another_config_lib_v3": "*",
     "fabric-api": "*"
   },
