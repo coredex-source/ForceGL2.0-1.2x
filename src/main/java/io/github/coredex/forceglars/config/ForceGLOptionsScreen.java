@@ -131,13 +131,29 @@ public class ForceGLOptionsScreen extends Screen {
                 }
             });
 
+            this.addDrawableChild(new SliderWidget(centerX, centerY + 3 * spacing, 200, buttonHeight,
+                    Text.literal("OpenGL Minor Version: " + openGLVersionMinor), openGLVersionMinor / 9.0) {
+                @Override
+                protected void updateMessage() {
+                    this.setMessage(Text.literal("OpenGL Minor Version: " + (forceCompatibilityMode ? "0 (forced)" : openGLVersionMinor)));
+                    this.active = !forceCompatibilityMode;
+                }
+
+                @Override
+                protected void applyValue() {
+                    if (!forceCompatibilityMode) {
+                        openGLVersionMinor = (int) Math.round(this.value * 9);
+                    }
+                }
+            });
+
             this.addDrawableChild(ButtonWidget.builder(
                     Text.literal("Disable VBO: " + (disableVBO ? "ON" : "OFF")),
                     button -> {
                         disableVBO = !disableVBO;
                         button.setMessage(Text.literal("Disable VBO: " + (disableVBO ? "ON" : "OFF")));
                     }
-            ).dimensions(centerX, centerY + 3 * spacing, 200, buttonHeight).build());
+            ).dimensions(centerX, centerY + 4 * spacing, 200, buttonHeight).build());
 
             this.addDrawableChild(ButtonWidget.builder(
                     Text.literal("Iris IF Override: " + (irisIFOverride ? "ON" : "OFF")),
@@ -145,7 +161,7 @@ public class ForceGLOptionsScreen extends Screen {
                         irisIFOverride = !irisIFOverride;
                         button.setMessage(Text.literal("Iris IF Override: " + (irisIFOverride ? "ON" : "OFF")));
                     }
-            ).dimensions(centerX, centerY + 4 * spacing, 200, buttonHeight).build());
+            ).dimensions(centerX, centerY + 5 * spacing, 200, buttonHeight).build());
         } else {
             // Add ARS toggle button at the top of ARS settings
             this.addDrawableChild(ButtonWidget.builder(
