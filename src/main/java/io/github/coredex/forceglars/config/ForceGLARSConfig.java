@@ -63,6 +63,33 @@ public class ForceGLARSConfig {
     @SerialEntry
     public int updateInterval = 10000;
 
+    @SerialEntry
+    public boolean renderCompatibilityEnabled = false;
+
+    @SerialEntry
+    public boolean sodiumCompatibilityMode = false;
+
+    @SerialEntry
+    public boolean sodiumDisableVertexArrayObjects = true;
+
+    @SerialEntry
+    public boolean sodiumDisableVertexBufferObjects = false;
+
+    @SerialEntry
+    public boolean sodiumDisableInstancedRendering = true;
+
+    @SerialEntry
+    public boolean sodiumForceFixedFunction = false;
+
+    @SerialEntry
+    public boolean sodiumDisableGeometryShaders = true;
+
+    @SerialEntry
+    public boolean sodiumDisableComputeShaders = true;
+
+    @SerialEntry
+    public boolean sodiumUseLegacyChunkRenderer = true;
+
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(CONFIG, ((defaults, config, builder) -> builder
                 .title(Text.translatable("ForceGL Config"))
@@ -160,6 +187,63 @@ public class ForceGLARSConfig {
                                     .description(OptionDescription.of(Text.translatable("Set the performance update interval for ARS.")))
                                     .binding(defaults.updateInterval, () -> config.updateInterval, newVal -> config.updateInterval = newVal)
                                     .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(1000, 30000).step(1000))
+                                    .build())
+                            .build())
+                        .group(OptionGroup.createBuilder()
+                            .name(Text.translatable("Render Compatibility"))
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Enable Render Compatibility"))
+                                    .description(OptionDescription.of(Text.translatable("Enable compatibility features for other rendering mods.")))
+                                    .binding(defaults.renderCompatibilityEnabled, () -> config.renderCompatibilityEnabled, newVal -> config.renderCompatibilityEnabled = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Sodium Compatibility Mode"))
+                                    .description(OptionDescription.of(Text.translatable("Enable specific compatibility features for Sodium mod.")))
+                                    .binding(defaults.sodiumCompatibilityMode, () -> config.sodiumCompatibilityMode, newVal -> config.sodiumCompatibilityMode = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Disable Vertex Array Objects"))
+                                    .description(OptionDescription.of(Text.translatable("Disables VAOs in Sodium for OpenGL 2.x compatibility.")))
+                                    .binding(defaults.sodiumDisableVertexArrayObjects, () -> config.sodiumDisableVertexArrayObjects, newVal -> config.sodiumDisableVertexArrayObjects = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Disable Vertex Buffer Objects"))
+                                    .description(OptionDescription.of(Text.translatable("Disables VBOs in Sodium for maximum compatibility.")))
+                                    .binding(defaults.sodiumDisableVertexBufferObjects, () -> config.sodiumDisableVertexBufferObjects, newVal -> config.sodiumDisableVertexBufferObjects = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Disable Instanced Rendering"))
+                                    .description(OptionDescription.of(Text.translatable("Disables instanced rendering for older GPUs.")))
+                                    .binding(defaults.sodiumDisableInstancedRendering, () -> config.sodiumDisableInstancedRendering, newVal -> config.sodiumDisableInstancedRendering = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Force Fixed Function Pipeline"))
+                                    .description(OptionDescription.of(Text.translatable("Forces Sodium to use fixed function rendering (OpenGL 1.x/2.x).")))
+                                    .binding(defaults.sodiumForceFixedFunction, () -> config.sodiumForceFixedFunction, newVal -> config.sodiumForceFixedFunction = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Disable Geometry Shaders"))
+                                    .description(OptionDescription.of(Text.translatable("Disables geometry shaders (requires OpenGL 3.2+).")))
+                                    .binding(defaults.sodiumDisableGeometryShaders, () -> config.sodiumDisableGeometryShaders, newVal -> config.sodiumDisableGeometryShaders = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Disable Compute Shaders"))
+                                    .description(OptionDescription.of(Text.translatable("Disables compute shaders (requires OpenGL 4.3+).")))
+                                    .binding(defaults.sodiumDisableComputeShaders, () -> config.sodiumDisableComputeShaders, newVal -> config.sodiumDisableComputeShaders = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Use Legacy Chunk Renderer"))
+                                    .description(OptionDescription.of(Text.translatable("Forces Sodium to use legacy chunk rendering for compatibility.")))
+                                    .binding(defaults.sodiumUseLegacyChunkRenderer, () -> config.sodiumUseLegacyChunkRenderer, newVal -> config.sodiumUseLegacyChunkRenderer = newVal)
+                                    .controller(BooleanControllerBuilder::create)
                                     .build())
                             .build())
                         .build()

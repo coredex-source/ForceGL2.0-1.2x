@@ -3,6 +3,7 @@ package io.github.coredex.forceglars.config;
 import io.github.coredex.forceglars.ForceGLARS;
 import io.github.coredex.forceglars.AdaptiveRenderScaling.AdaptiveChunkScaling;
 import io.github.coredex.forceglars.AdaptiveRenderScaling.PerformanceMonitor;
+import io.github.coredex.forceglars.rendercompat.RenderCompatibilityManager;
 
 public class DynamicConfigUpdates {
     public static void applyDynamicChanges() {
@@ -24,6 +25,11 @@ public class DynamicConfigUpdates {
         } else if (ForceGLOptionsScreen.ARScalingEnabled && !ForceGLARSConfig.CONFIG.instance().adaptiveRenderScalingEnabled){
             ForceGLOptionsScreen.ARScalingEnabled = ForceGLARSConfig.CONFIG.instance().adaptiveRenderScalingEnabled;
             ForceGLARS.isListenerActive = false;
+        }
+        
+        // Apply render compatibility changes
+        if (ForceGLARSConfig.CONFIG.instance().renderCompatibilityEnabled) {
+            RenderCompatibilityManager.applySodiumCompatibility();
         }
     }
 }

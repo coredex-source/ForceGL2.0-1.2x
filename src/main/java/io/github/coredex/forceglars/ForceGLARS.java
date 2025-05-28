@@ -9,6 +9,7 @@ import io.github.coredex.forceglars.config.DynamicConfigUpdates;
 import io.github.coredex.forceglars.config.ForceGLARSConfig;
 import io.github.coredex.forceglars.override.HintOverride;
 import io.github.coredex.forceglars.override.OverrideType;
+import io.github.coredex.forceglars.rendercompat.RenderCompatibilityManager;
 import io.github.coredex.forceglars.utils.FileWatcher;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -131,6 +132,17 @@ public class ForceGLARS {
         } else {
             LOGGER.warn("Adaptive Render Scaling is Disabled");
         }
+
+        // Initialize render compatibility
+        RenderCompatibilityManager.initialize();
+        
+        // Apply early Sodium compatibility if needed
+        if (RenderCompatibilityManager.isSodiumDetected() && 
+            ForceGLARSConfig.CONFIG.instance().renderCompatibilityEnabled &&
+            ForceGLARSConfig.CONFIG.instance().sodiumCompatibilityMode) {
+            LOGGER.info("Early Sodium compatibility mode enabled for OpenGL 2.x support");
+        }
+        
         if (irisPresent && immediatelyFastPresent && !irisIFOverride) {
             LOGGER.warn("ForceGL is disabled because it can be incompatible with Iris and ImmediatelyFast if both are used together and shaders are being used. Override this behavior by changing \"irisIFOverride\" to true in the config manually or by using ModMenu/YACL.");
             GLFW_OVERRIDE_VALUES = ImmutableMap.of();
