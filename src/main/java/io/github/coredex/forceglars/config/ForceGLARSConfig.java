@@ -7,12 +7,14 @@ import dev.isxander.yacl3.api.OptionGroup;
 import dev.isxander.yacl3.api.YetAnotherConfigLib;
 import dev.isxander.yacl3.api.controller.BooleanControllerBuilder;
 import dev.isxander.yacl3.api.controller.IntegerSliderControllerBuilder;
+import dev.isxander.yacl3.api.controller.EnumControllerBuilder;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import dev.isxander.yacl3.platform.YACLPlatform;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.text.Text;
+import io.github.coredex.forceglars.hud.InteractiveHUD;
 
 public class ForceGLARSConfig {
     public static final ConfigClassHandler<ForceGLARSConfig> CONFIG = ConfigClassHandler.createBuilder(ForceGLARSConfig.class)
@@ -89,6 +91,28 @@ public class ForceGLARSConfig {
 
     @SerialEntry
     public boolean sodiumUseLegacyChunkRenderer = true;
+
+    // HUD Configuration
+    @SerialEntry
+    public boolean hudEnabled = false;
+
+    @SerialEntry
+    public InteractiveHUD.HudPosition hudPosition = InteractiveHUD.HudPosition.TOP_LEFT;
+
+    @SerialEntry
+    public int hudOffsetX = 10;
+
+    @SerialEntry
+    public int hudOffsetY = 10;
+
+    @SerialEntry
+    public int hudTransparency = 200;
+
+    @SerialEntry
+    public boolean hudShowBackground = true;
+
+    @SerialEntry
+    public boolean hudShowDetailedInfo = false;
 
     public static Screen configScreen(Screen parent) {
         return YetAnotherConfigLib.create(CONFIG, ((defaults, config, builder) -> builder
@@ -243,6 +267,51 @@ public class ForceGLARSConfig {
                                     .name(Text.translatable("Use Legacy Chunk Renderer"))
                                     .description(OptionDescription.of(Text.translatable("Forces Sodium to use legacy chunk rendering for compatibility.")))
                                     .binding(defaults.sodiumUseLegacyChunkRenderer, () -> config.sodiumUseLegacyChunkRenderer, newVal -> config.sodiumUseLegacyChunkRenderer = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .build())
+                        .group(OptionGroup.createBuilder()
+                            .name(Text.translatable("Interactive HUD"))
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Enable HUD"))
+                                    .description(OptionDescription.of(Text.translatable("Show real-time performance metrics overlay.")))
+                                    .binding(defaults.hudEnabled, () -> config.hudEnabled, newVal -> config.hudEnabled = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<InteractiveHUD.HudPosition>createBuilder()
+                                    .name(Text.translatable("HUD Position"))
+                                    .description(OptionDescription.of(Text.translatable("Choose where to display the HUD on screen.")))
+                                    .binding(defaults.hudPosition, () -> config.hudPosition, newVal -> config.hudPosition = newVal)
+                                    .controller(opt -> EnumControllerBuilder.create(opt).enumClass(InteractiveHUD.HudPosition.class))
+                                    .build())
+                            .option(Option.<Integer>createBuilder()
+                                    .name(Text.translatable("HUD X Offset"))
+                                    .description(OptionDescription.of(Text.translatable("Horizontal offset from the selected position.")))
+                                    .binding(defaults.hudOffsetX, () -> config.hudOffsetX, newVal -> config.hudOffsetX = newVal)
+                                    .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(0, 100).step(1))
+                                    .build())
+                            .option(Option.<Integer>createBuilder()
+                                    .name(Text.translatable("HUD Y Offset"))
+                                    .description(OptionDescription.of(Text.translatable("Vertical offset from the selected position.")))
+                                    .binding(defaults.hudOffsetY, () -> config.hudOffsetY, newVal -> config.hudOffsetY = newVal)
+                                    .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(0, 100).step(1))
+                                    .build())
+                            .option(Option.<Integer>createBuilder()
+                                    .name(Text.translatable("HUD Transparency"))
+                                    .description(OptionDescription.of(Text.translatable("Transparency level of the HUD (0=invisible, 255=opaque).")))
+                                    .binding(defaults.hudTransparency, () -> config.hudTransparency, newVal -> config.hudTransparency = newVal)
+                                    .controller(opt -> IntegerSliderControllerBuilder.create(opt).range(50, 255).step(5))
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Show Background"))
+                                    .description(OptionDescription.of(Text.translatable("Display a background behind the HUD text.")))
+                                    .binding(defaults.hudShowBackground, () -> config.hudShowBackground, newVal -> config.hudShowBackground = newVal)
+                                    .controller(BooleanControllerBuilder::create)
+                                    .build())
+                            .option(Option.<Boolean>createBuilder()
+                                    .name(Text.translatable("Show Detailed Info"))
+                                    .description(OptionDescription.of(Text.translatable("Display additional technical information.")))
+                                    .binding(defaults.hudShowDetailedInfo, () -> config.hudShowDetailedInfo, newVal -> config.hudShowDetailedInfo = newVal)
                                     .controller(BooleanControllerBuilder::create)
                                     .build())
                             .build())

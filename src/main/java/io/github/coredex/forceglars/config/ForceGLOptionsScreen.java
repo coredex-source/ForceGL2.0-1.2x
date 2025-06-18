@@ -1,5 +1,6 @@
 package io.github.coredex.forceglars.config;
 
+import io.github.coredex.forceglars.hud.InteractiveHUD;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -37,8 +38,16 @@ public class ForceGLOptionsScreen extends Screen {
     private boolean sodiumDisableComputeShaders = ForceGLARSConfig.CONFIG.instance().sodiumDisableComputeShaders;
     private boolean sodiumUseLegacyChunkRenderer = ForceGLARSConfig.CONFIG.instance().sodiumUseLegacyChunkRenderer;
 
+    private boolean hudEnabled = ForceGLARSConfig.CONFIG.instance().hudEnabled;
+    private InteractiveHUD.HudPosition hudPosition = ForceGLARSConfig.CONFIG.instance().hudPosition;
+    private int hudOffsetX = ForceGLARSConfig.CONFIG.instance().hudOffsetX;
+    private int hudOffsetY = ForceGLARSConfig.CONFIG.instance().hudOffsetY;
+    private int hudTransparency = ForceGLARSConfig.CONFIG.instance().hudTransparency;
+    private boolean hudShowBackground = ForceGLARSConfig.CONFIG.instance().hudShowBackground;
+    private boolean hudShowDetailedInfo = ForceGLARSConfig.CONFIG.instance().hudShowDetailedInfo;
+
     private boolean showOpenGLConfig = true; // Track which config is currently shown
-    private int currentConfigPage = 0; // 0 = OpenGL, 1 = ARS, 2 = Render Compatibility
+    private int currentConfigPage = 0; // 0 = OpenGL, 1 = ARS, 2 = Render Compatibility, 3 = HUD
 
     public ForceGLOptionsScreen(Screen parent, Text title) {
         super(title);
@@ -82,9 +91,18 @@ public class ForceGLOptionsScreen extends Screen {
                 }
         ).dimensions(30 + 2 * buttonWidth, topLeftY, buttonWidth, buttonHeight).build());
 
+        this.addDrawableChild(ButtonWidget.builder(
+                Text.literal("HUD Config"),
+                button -> {
+                    currentConfigPage = 3;
+                    showOpenGLConfig = false;
+                    this.init();
+                }
+        ).dimensions(40 + 3 * buttonWidth, topLeftY, buttonWidth, buttonHeight).build());
+
         // Calculate more sensible layout values
         int centerX = this.width / 2 - 100;
-        int centerY = this.height / 3 - 20; // Start higher up to leave room for info text
+        int centerY = this.height / 3 - 20;
         
         // Common buttons (Save and Back) at the bottom
         this.addDrawableChild(ButtonWidget.builder(
@@ -113,8 +131,20 @@ public class ForceGLOptionsScreen extends Screen {
                     ForceGLARSConfig.CONFIG.instance().sodiumDisableGeometryShaders = sodiumDisableGeometryShaders;
                     ForceGLARSConfig.CONFIG.instance().sodiumDisableComputeShaders = sodiumDisableComputeShaders;
                     ForceGLARSConfig.CONFIG.instance().sodiumUseLegacyChunkRenderer = sodiumUseLegacyChunkRenderer;
+                    // HUD settings
+                    ForceGLARSConfig.CONFIG.instance().hudEnabled = hudEnabled;
+                    ForceGLARSConfig.CONFIG.instance().hudPosition = hudPosition;
+                    ForceGLARSConfig.CONFIG.instance().hudOffsetX = hudOffsetX;
+                    ForceGLARSConfig.CONFIG.instance().hudOffsetY = hudOffsetY;
+                    ForceGLARSConfig.CONFIG.instance().hudTransparency = hudTransparency;
+                    ForceGLARSConfig.CONFIG.instance().hudShowBackground = hudShowBackground;
+                    ForceGLARSConfig.CONFIG.instance().hudShowDetailedInfo = hudShowDetailedInfo;
+                    
                     ForceGLARSConfig.CONFIG.save();
+                    
+                    // Apply dynamic changes immediately
                     DynamicConfigUpdates.applyDynamicChanges();
+                    
                     if (this.client != null) this.client.setScreen(parent);
                 }
         ).dimensions(this.width / 2 - 105, this.height - 40, 100, buttonHeight).build());
@@ -203,6 +233,9 @@ public class ForceGLOptionsScreen extends Screen {
                         button -> {
                             ARScalingEnabled = !ARScalingEnabled;
                             button.setMessage(Text.literal("Enable Adaptive Render Scaling: " + (ARScalingEnabled ? "ON" : "OFF")));
+                            
+                            // Immediately update the local config and apply changes
+                            ForceGLARSConfig.CONFIG.instance().adaptiveRenderScalingEnabled = ARScalingEnabled;
                             
                             // Update the enabled status of other ARS controls based on the toggle state
                             for (var element : this.children()) {
@@ -383,6 +416,86 @@ public class ForceGLOptionsScreen extends Screen {
                             button.setMessage(Text.literal("Use Legacy Chunk Renderer: " + (sodiumUseLegacyChunkRenderer ? "ON" : "OFF")));
                         }
                 ).dimensions(centerX, centerY + 6 * spacing, 200, buttonHeight).build());
+            } else if (currentConfigPage == 3) {
+                // HUD Config
+                this.addDrawableChild(ButtonWidget.builder(
+                        Text.literal("Enable HUD: " + (hudEnabled ? "ON" : "OFF")),
+                        button -> {
+                            hudEnabled = !hudEnabled;
+                            button.setMessage(Text.literal("Enable HUD: " + (hudEnabled ? "ON" : "OFF")));
+                        }
+                ).dimensions(centerX, centerY, 200, buttonHeight).build());
+
+                this.addDrawableChild(ButtonWidget.builder(
+                        Text.literal("Position: " + hudPosition.name()),
+                        button -> {
+                            InteractiveHUD.HudPosition[] positions = InteractiveHUD.HudPosition.values();
+                            int currentIndex = 0;
+                            for (int i = 0; i < positions.length; i++) {
+                                if (positions[i] == hudPosition) {
+                                    currentIndex = i;
+                                    break;
+                                }
+                            }
+                            hudPosition = positions[(currentIndex + 1) % positions.length];
+                            button.setMessage(Text.literal("Position: " + hudPosition.name()));
+                        }
+                ).dimensions(centerX, centerY + spacing, 200, buttonHeight).build());
+
+                this.addDrawableChild(new SliderWidget(centerX, centerY + 2 * spacing, 200, buttonHeight,
+                        Text.literal("X Offset: " + hudOffsetX), hudOffsetX / 100.0) {
+                    @Override
+                    protected void updateMessage() {
+                        this.setMessage(Text.literal("X Offset: " + hudOffsetX));
+                    }
+
+                    @Override
+                    protected void applyValue() {
+                        hudOffsetX = (int) Math.round(this.value * 100);
+                    }
+                });
+
+                this.addDrawableChild(new SliderWidget(centerX, centerY + 3 * spacing, 200, buttonHeight,
+                        Text.literal("Y Offset: " + hudOffsetY), hudOffsetY / 100.0) {
+                    @Override
+                    protected void updateMessage() {
+                        this.setMessage(Text.literal("Y Offset: " + hudOffsetY));
+                    }
+
+                    @Override
+                    protected void applyValue() {
+                        hudOffsetY = (int) Math.round(this.value * 100);
+                    }
+                });
+
+                this.addDrawableChild(new SliderWidget(centerX, centerY + 4 * spacing, 200, buttonHeight,
+                        Text.literal("Transparency: " + hudTransparency), (hudTransparency - 50) / 205.0) {
+                    @Override
+                    protected void updateMessage() {
+                        this.setMessage(Text.literal("Transparency: " + hudTransparency));
+                    }
+
+                    @Override
+                    protected void applyValue() {
+                        hudTransparency = 50 + (int) Math.round(this.value * 205);
+                    }
+                });
+
+                this.addDrawableChild(ButtonWidget.builder(
+                        Text.literal("Show Background: " + (hudShowBackground ? "ON" : "OFF")),
+                        button -> {
+                            hudShowBackground = !hudShowBackground;
+                            button.setMessage(Text.literal("Show Background: " + (hudShowBackground ? "ON" : "OFF")));
+                        }
+                ).dimensions(centerX, centerY + 5 * spacing, 200, buttonHeight).build());
+
+                this.addDrawableChild(ButtonWidget.builder(
+                        Text.literal("Detailed Info: " + (hudShowDetailedInfo ? "ON" : "OFF")),
+                        button -> {
+                            hudShowDetailedInfo = !hudShowDetailedInfo;
+                            button.setMessage(Text.literal("Detailed Info: " + (hudShowDetailedInfo ? "ON" : "OFF")));
+                        }
+                ).dimensions(centerX, centerY + 6 * spacing, 200, buttonHeight).build());
             }
         }
     }
@@ -483,6 +596,39 @@ public class ForceGLOptionsScreen extends Screen {
                     context.drawCenteredTextWithShadow(
                         this.textRenderer,
                         Text.literal("Disable modern features to run on legacy GPUs"),
+                        this.width / 2,
+                        infoY + 15,
+                        0xAAAAAA
+                    );
+                }
+            } else if (currentConfigPage == 3) {
+                // Draw informational text for HUD
+                if (!hudEnabled) {
+                    context.drawCenteredTextWithShadow(
+                        this.textRenderer,
+                        Text.literal("Interactive HUD is currently disabled"),
+                        this.width / 2,
+                        infoY,
+                        0xAAAAAA
+                    );
+                    context.drawCenteredTextWithShadow(
+                        this.textRenderer,
+                        Text.literal("Enable it to see real-time performance metrics in-game"),
+                        this.width / 2,
+                        infoY + 15,
+                        0xAAAAAA
+                    );
+                } else {
+                    context.drawCenteredTextWithShadow(
+                        this.textRenderer,
+                        Text.literal("HUD will display FPS, memory, and ForceGL status"),
+                        this.width / 2,
+                        infoY,
+                        0xAAAAAA
+                    );
+                    context.drawCenteredTextWithShadow(
+                        this.textRenderer,
+                        Text.literal("Color-coded indicators: Green=Good, Yellow=Warning, Red=Critical"),
                         this.width / 2,
                         infoY + 15,
                         0xAAAAAA

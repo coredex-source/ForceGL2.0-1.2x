@@ -7,7 +7,8 @@
     "OptionsScreenMixin",
     "WindowMixin",
     "GameRendererMixin",
-    "DebugHudMixin"
+    "DebugHudMixin",
+    "InGameHudMixin"
   ],
   "mixins": [
     "OptionsScreenMixin"

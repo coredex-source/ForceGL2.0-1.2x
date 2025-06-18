@@ -10,23 +10,31 @@ public class AdaptiveChunkScaling {
     private static int lastRenderDistance = ForceGLARSConfig.CONFIG.instance().defaultRenderDistance; // Default render distance
 
     public static void setDefaultRenderDistance(){
-        RenderScalingTools.setRenderDistance(ForceGLARSConfig.CONFIG.instance().defaultRenderDistance);
+        int defaultDistance = ForceGLARSConfig.CONFIG.instance().defaultRenderDistance;
+        RenderScalingTools.setRenderDistance(defaultDistance);
+        lastRenderDistance = defaultDistance;
     }
 
     public static void adjustRenderDistance(int fps) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client == null || client.options == null) return;
 
+        // Use current config values in case they changed
+        int currentMinDistance = ForceGLARSConfig.CONFIG.instance().minRenderDistance;
+        int currentMaxDistance = ForceGLARSConfig.CONFIG.instance().maxRenderDistance;
+        int minFpsThreshold = ForceGLARSConfig.CONFIG.instance().minFpsThreshold;
+        int maxFpsThreshold = ForceGLARSConfig.CONFIG.instance().maxFpsThreshold;
+
         int newRenderDistance = lastRenderDistance;
 
-        if (fps < PerformanceMonitor.MIN_FPS_THRESHOLD - 10) {
-            newRenderDistance = MIN_RENDER_DISTANCE;
-        } else if (fps < PerformanceMonitor.MIN_FPS_THRESHOLD) {
-            newRenderDistance = Math.max(MIN_RENDER_DISTANCE, lastRenderDistance - 1);
-        } else if (fps > PerformanceMonitor.MAX_FPS_THRESHOLD + 15) {
-            newRenderDistance = MAX_RENDER_DISTANCE;
-        } else if (fps > PerformanceMonitor.MAX_FPS_THRESHOLD) {
-            newRenderDistance = Math.min(MAX_RENDER_DISTANCE, lastRenderDistance + 3);
+        if (fps < minFpsThreshold - 10) {
+            newRenderDistance = currentMinDistance;
+        } else if (fps < minFpsThreshold) {
+            newRenderDistance = Math.max(currentMinDistance, lastRenderDistance - 1);
+        } else if (fps > maxFpsThreshold + 15) {
+            newRenderDistance = currentMaxDistance;
+        } else if (fps > maxFpsThreshold) {
+            newRenderDistance = Math.min(currentMaxDistance, lastRenderDistance + 3);
         }
 
         if (newRenderDistance != lastRenderDistance) {

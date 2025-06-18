@@ -16,12 +16,17 @@ public class PerformanceMonitor {
 
     public void tick() {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastCheckTime >= FPS_CHECK_INTERVAL_MS) {
+        
+        // Use current config values in case they changed
+        int currentCheckInterval = ForceGLARSConfig.CONFIG.instance().checkInterval;
+        int currentUpdateInterval = ForceGLARSConfig.CONFIG.instance().updateInterval;
+        
+        if (currentTime - lastCheckTime >= currentCheckInterval) {
             MinecraftClient client = MinecraftClient.getInstance();
             if (client != null) {
                 avgFps = avgFps + client.getCurrentFps();
                 intervalCount++;
-                if (currentTime - lastUpdateTime >= FPS_UPDATE_INTERVAL_MS){
+                if (currentTime - lastUpdateTime >= currentUpdateInterval){
                     avgFps = Math.floorDiv(avgFps, intervalCount);
                     AdaptiveChunkScaling.adjustRenderDistance(avgFps);
                     avgFps = 0;
