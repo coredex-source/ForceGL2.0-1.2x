@@ -28,7 +28,7 @@
     "forceglars.mixins.json"
   ],
   "depends": {
-    "minecraft": "1.21.8",
+    "minecraft": "1.21.9",
     "yet_another_config_lib_v3": "*",
     "fabric-api": "*"
   },
