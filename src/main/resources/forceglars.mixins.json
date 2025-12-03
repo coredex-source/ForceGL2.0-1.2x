@@ -5,6 +5,7 @@
   "client": [
     "GL20Mixin",
     "GL30CMixin",
+    "SodiumShaderLoaderMixin",
     "OptionsScreenMixin",
     "WindowMixin",
     "GameRendererMixin",
