@@ -1,11 +1,11 @@
 package io.github.coredex.forceglars.AdaptiveRenderScaling;
 
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class RenderScalingTools {
     public static void setRenderDistance(int RenderDistance){
-        MinecraftClient client = MinecraftClient.getInstance();
-        client.options.setServerViewDistance(RenderDistance);
-        client.options.getViewDistance().setValue(RenderDistance);
+        Minecraft client = Minecraft.getInstance();
+        client.options.setServerRenderDistance(RenderDistance);
+        client.options.renderDistance().set(RenderDistance);
     }
 }

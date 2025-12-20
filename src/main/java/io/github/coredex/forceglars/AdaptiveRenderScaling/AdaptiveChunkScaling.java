@@ -1,7 +1,7 @@
 package io.github.coredex.forceglars.AdaptiveRenderScaling;
 
 import io.github.coredex.forceglars.config.ForceGLARSConfig;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class AdaptiveChunkScaling {
     public static int MIN_RENDER_DISTANCE = ForceGLARSConfig.CONFIG.instance().minRenderDistance;  // Minimum render distance
@@ -16,7 +16,7 @@ public class AdaptiveChunkScaling {
     }
 
     public static void adjustRenderDistance(int fps) {
-        MinecraftClient client = MinecraftClient.getInstance();
+        Minecraft client = Minecraft.getInstance();
         if (client == null || client.options == null) return;
 
         // Use current config values in case they changed

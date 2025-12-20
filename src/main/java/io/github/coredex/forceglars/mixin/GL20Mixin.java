@@ -1,12 +1,10 @@
 package io.github.coredex.forceglars.mixin;
 
-import net.minecraft.client.util.Window;
-
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
-
+import com.mojang.blaze3d.platform.Window;
 import io.github.coredex.forceglars.ForceGLARS;
 import io.github.coredex.forceglars.override.HintOverride;
 import io.github.coredex.forceglars.override.OverrideType;

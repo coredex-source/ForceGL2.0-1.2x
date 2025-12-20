@@ -4,16 +4,16 @@ import io.github.coredex.forceglars.ForceGLARS;
 import io.github.coredex.forceglars.config.ForceGLARSConfig;
 import io.github.coredex.forceglars.config.ForceGLOptionsScreen;
 import io.github.coredex.forceglars.rendercompat.RenderCompatibilityManager;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.text.Text;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 
 public class InteractiveHUD {
-    private static final MinecraftClient client = MinecraftClient.getInstance();
+    private static final Minecraft client = Minecraft.getInstance();
     private static long lastUpdateTime = 0;
     private static final long UPDATE_INTERVAL = 500; // Update every 500ms
     
@@ -32,7 +32,7 @@ public class InteractiveHUD {
     private static final int COLOR_NEUTRAL = 0xFFFFFF;  // White
     private static final int COLOR_INFO = 0x00FFFF;     // Cyan
     
-    public static void render(DrawContext context, float delta) {
+    public static void render(GuiGraphics context, float delta) {
         if (!ForceGLARSConfig.CONFIG.instance().hudEnabled) {
             return;
         }
@@ -56,9 +56,9 @@ public class InteractiveHUD {
             int lineY = y + (i * 10);
             
             int color = applyTransparency(line.color, transparency);
-            context.drawTextWithShadow(
-                client.textRenderer,
-                Text.literal(line.text),
+            context.drawString(
+                client.font,
+                Component.literal(line.text),
                 x,
                 lineY,
                 color
@@ -75,7 +75,7 @@ public class InteractiveHUD {
         lastUpdateTime = currentTime;
         
         // Update FPS
-        currentFPS = client.getCurrentFps();
+        currentFPS = client.getFps();
         
         // Update memory info
         Runtime runtime = Runtime.getRuntime();
@@ -93,7 +93,7 @@ public class InteractiveHUD {
         
         // Update render distance
         if (client.options != null) {
-            renderDistance = client.options.getViewDistance().getValue();
+            renderDistance = client.options.renderDistance().get();
         }
     }
     
@@ -163,7 +163,7 @@ public class InteractiveHUD {
     }
     
     private static int getHudX() {
-        int screenWidth = client.getWindow().getScaledWidth();
+        int screenWidth = client.getWindow().getGuiScaledWidth();
         HudPosition position = ForceGLARSConfig.CONFIG.instance().hudPosition;
         
         switch (position) {
@@ -182,7 +182,7 @@ public class InteractiveHUD {
     }
     
     private static int getHudY() {
-        int screenHeight = client.getWindow().getScaledHeight();
+        int screenHeight = client.getWindow().getGuiScaledHeight();
         HudPosition position = ForceGLARSConfig.CONFIG.instance().hudPosition;
         
         switch (position) {
@@ -203,7 +203,7 @@ public class InteractiveHUD {
         return Math.max(0, Math.min(255, ForceGLARSConfig.CONFIG.instance().hudTransparency));
     }
     
-    private static void renderBackground(DrawContext context, int x, int y, int lines, int transparency) {
+    private static void renderBackground(GuiGraphics context, int x, int y, int lines, int transparency) {
         int width = 150;
         int height = lines * 10 + 4;
         int bgColor = applyTransparency(0x000000, transparency / 2); // Semi-transparent black

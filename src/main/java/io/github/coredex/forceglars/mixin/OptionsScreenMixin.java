@@ -1,25 +1,24 @@
 package io.github.coredex.forceglars.mixin;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.option.OptionsScreen;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.text.Text;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import io.github.coredex.forceglars.config.ForceGLOptionsScreen;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
+import net.minecraft.network.chat.Component;
 
 @Mixin(OptionsScreen.class)
 public abstract class OptionsScreenMixin extends Screen {
 
-    private ButtonWidget forceGLOptionsButton;
+    private Button forceGLOptionsButton;
 
-    protected OptionsScreenMixin(Text title) {
+    protected OptionsScreenMixin(Component title) {
         super(title);
     }
 
@@ -27,38 +26,38 @@ public abstract class OptionsScreenMixin extends Screen {
     private void addForceGLOptionsButton(CallbackInfo info) {
         // Iterate over children to find the "Skin Customization" button
         for (var child : this.children()) {
-            if (child instanceof ButtonWidget buttonWidget && buttonWidget.getMessage().getString().equals("Skin Customization...")) {
+            if (child instanceof Button buttonWidget && buttonWidget.getMessage().getString().equals("Skin Customization...")) {
                 // Add the "ForceGL Options" button above it
-                forceGLOptionsButton = ButtonWidget.builder(
-                    Text.of("ForceGL Options"),
+                forceGLOptionsButton = Button.builder(
+                    Component.nullToEmpty("ForceGL Options"),
                     button -> {
                         try {
                             // Pass the current OptionsScreen instance as the parent
-                            var constructor = ForceGLOptionsScreen.class.getDeclaredConstructor(Screen.class, Text.class);
+                            var constructor = ForceGLOptionsScreen.class.getDeclaredConstructor(Screen.class, Component.class);
                             constructor.setAccessible(true);
-                            MinecraftClient.getInstance().setScreen(constructor.newInstance(this, Text.of("ForceGL Options")));
+                            Minecraft.getInstance().setScreen(constructor.newInstance(this, Component.nullToEmpty("ForceGL Options")));
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                ).dimensions(
+                ).bounds(
                     buttonWidget.getX(), // Get x position
                     buttonWidget.getY() - 24, // Place above
                     buttonWidget.getWidth(),
                     buttonWidget.getHeight()
                 ).build();
 
-                this.addDrawableChild(forceGLOptionsButton);
+                this.addRenderableWidget(forceGLOptionsButton);
                 break;
             }
         }
     }
 
     @Override
-    public void render(DrawContext drawContext, int mouseX, int mouseY, float delta) {
+    public void render(GuiGraphics drawContext, int mouseX, int mouseY, float delta) {
         if (forceGLOptionsButton != null) {
             for (var child : this.children()) {
-                if (child instanceof ButtonWidget buttonWidget && buttonWidget.getMessage().getString().equals("Skin Customization...")) {
+                if (child instanceof Button buttonWidget && buttonWidget.getMessage().getString().equals("Skin Customization...")) {
                     forceGLOptionsButton.setX(buttonWidget.getX());
                     forceGLOptionsButton.setY(buttonWidget.getY() - 24);
                     break;

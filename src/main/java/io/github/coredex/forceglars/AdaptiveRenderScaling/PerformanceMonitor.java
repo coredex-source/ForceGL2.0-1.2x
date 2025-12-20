@@ -1,7 +1,7 @@
 package io.github.coredex.forceglars.AdaptiveRenderScaling;
 
 import io.github.coredex.forceglars.config.ForceGLARSConfig;
-import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.Minecraft;
 
 public class PerformanceMonitor {
     public static int FPS_UPDATE_INTERVAL_MS = ForceGLARSConfig.CONFIG.instance().updateInterval;
@@ -22,9 +22,9 @@ public class PerformanceMonitor {
         int currentUpdateInterval = ForceGLARSConfig.CONFIG.instance().updateInterval;
         
         if (currentTime - lastCheckTime >= currentCheckInterval) {
-            MinecraftClient client = MinecraftClient.getInstance();
+            Minecraft client = Minecraft.getInstance();
             if (client != null) {
-                avgFps = avgFps + client.getCurrentFps();
+                avgFps = avgFps + client.getFps();
                 intervalCount++;
                 if (currentTime - lastUpdateTime >= currentUpdateInterval){
                     avgFps = Math.floorDiv(avgFps, intervalCount);
@@ -39,7 +39,7 @@ public class PerformanceMonitor {
     }
 
     public int getCurrentFps() {
-        MinecraftClient client = MinecraftClient.getInstance();
-        return client.getCurrentFps();
+        Minecraft client = Minecraft.getInstance();
+        return client.getFps();
     }
 }

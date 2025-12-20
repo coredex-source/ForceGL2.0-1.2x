@@ -1,13 +1,12 @@
 package io.github.coredex.forceglars.mixin;
 
-import net.minecraft.client.util.Window;
 import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
+import com.mojang.blaze3d.platform.Window;
 import io.github.coredex.forceglars.ForceGLARS;
 
 @Mixin(Window.class)
@@ -15,7 +14,7 @@ public class WindowMixin {
     @Shadow private long handle;
 
     // Use require=0 to make this injection optional if the method doesn't match exactly
-    @Inject(method = "setVsync", at = @At("HEAD"), cancellable = true, require = 0)
+    @Inject(method = "updateVsync", at = @At("HEAD"), cancellable = true, require = 0)
     private void onSetVsync(boolean vsync, CallbackInfo ci) {
         // In compatibility mode, we want to ensure vsync is enabled to prevent GPU stress
         if (ForceGLARS.forceCompatibilityMode && !vsync) {

@@ -1,7 +1,5 @@
 package io.github.coredex.forceglars.mixin;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.hud.DebugHud;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,8 +10,10 @@ import io.github.coredex.forceglars.config.ForceGLARSConfig;
 import io.github.coredex.forceglars.config.ForceGLOptionsScreen;
 
 import java.util.List;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.DebugScreenOverlay;
 
-@Mixin(DebugHud.class)
+@Mixin(DebugScreenOverlay.class)
 public class DebugHudMixin {
     
     @Inject(method = "getRightText", at = @At("RETURN"), require = 0)
@@ -43,7 +43,7 @@ public class DebugHudMixin {
             debugInfo.add("");
             debugInfo.add("§6ARS Information:");
             
-            int currentDistance = MinecraftClient.getInstance().options.getViewDistance().getValue();
+            int currentDistance = Minecraft.getInstance().options.renderDistance().get();
             debugInfo.add("§7Current Render Distance: §f" + currentDistance);
             debugInfo.add("§7Range: §f" + ForceGLARSConfig.CONFIG.instance().minRenderDistance + 
                           "§7 to §f" + ForceGLARSConfig.CONFIG.instance().maxRenderDistance);
